@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v21\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
+        "source": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v21\\notification_action.xml"
+    },
+    {
+        "merged": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v21\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v21\\notification_template_icon_group.xml"
+    }
+]
