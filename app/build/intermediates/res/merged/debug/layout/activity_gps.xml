@@ -10,4 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.ulaval.ima.projet_session.ActivityGPS">
 
+    <TextView
+        android:text="AJOUTEZ CE QUE VOUS VOULEZ - C EST UNE ACTIVITY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView4"
+        tools:text="AJOUTEZ CE QUE VOUS VOULEZ - C EST UNE ACTIVITY" />
 </RelativeLayout>

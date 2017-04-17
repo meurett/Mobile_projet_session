@@ -30,7 +30,7 @@ public class FragmentAjoutDepense extends Fragment {
     {
         View view = inflater.inflate(R.layout.fragment_ajout_depense, container, false);
 
-        button = (Button) view.findViewById(R.id.button_take_photo_depense);
+        button = (Button) view.findViewById(R.id.button_ajout_depense_ajouter_photo);
         imageView = (ImageView) view.findViewById(R.id.imageView_photo_depense);
 
         button.setOnClickListener(new View.OnClickListener() {
