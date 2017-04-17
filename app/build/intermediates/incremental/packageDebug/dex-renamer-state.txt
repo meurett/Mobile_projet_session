@@ -1,4 +1,0 @@
-#Sun Apr 16 21:21:30 EDT 2017
-base.0=D\:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
-renamed.0=classes.dex
-file.0=D\:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex
