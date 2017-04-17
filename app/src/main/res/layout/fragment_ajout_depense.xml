@@ -21,7 +21,8 @@
             android:textStyle="normal|bold"
             android:layout_marginTop="18dp"
             android:layout_below="@+id/editText_ajout_depense_description"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="true" />
 
         <EditText
             android:layout_width="350dp"
@@ -35,27 +36,14 @@
             android:layout_below="@+id/ajout_depense_prefixe_prix"
             android:layout_centerHorizontal="true" />
 
-        <EditText
-            android:layout_width="350dp"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/editText_ajout_depense_description"
-            android:hint="Entrez la description de votre dépense ici"
-            android:scrollbars = "vertical"
-            android:layout_marginTop="18dp"
-            android:textSize="14sp"
-            android:layout_below="@+id/ajout_depense_prefixe_description"
-            android:layout_alignLeft="@+id/editText_ajout_depense_prix"
-            android:layout_alignStart="@+id/editText_ajout_depense_prix"
-            android:layout_height="75dp" />
-
         <Button
             android:text="VALIDER AJOUT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_ajout_depense_valider_ajout"
             tools:text="VALIDER AJOUT"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
             android:layout_below="@+id/editText_ajout_depense_prix"
             android:layout_centerHorizontal="true" />
 
@@ -65,23 +53,33 @@
             android:layout_height="wrap_content"
             android:id="@+id/button_ajout_depense_ajouter_photo"
             tools:text="AJOUTER PHOTO"
-            android:layout_marginLeft="26dp"
-            android:layout_marginStart="26dp"
-            android:layout_alignTop="@+id/imageView_photo_depense"
-            android:layout_alignLeft="@+id/editText_ajout_depense_description"
-            android:layout_alignStart="@+id/editText_ajout_depense_description" />
+            android:layout_marginTop="32dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
         <ImageView
-            android:layout_width="50dp"
-            app:srcCompat="@android:color/background_dark"
+            app:srcCompat="@android:color/darker_gray"
             android:id="@+id/imageView_photo_depense"
-            android:layout_marginTop="42dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/button_ajout_depense_valider_ajout"
-            android:layout_toEndOf="@+id/button_ajout_depense_valider_ajout" />
+            android:layout_marginTop="19dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_below="@+id/button_ajout_depense_ajouter_photo"
+            android:layout_centerHorizontal="true"
+            android:background="@android:drawable/alert_dark_frame" />
+
+        <EditText
+            android:layout_width="350dp"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editText_ajout_depense_description"
+            android:hint="Entrez la description de votre dépense ici"
+            android:scrollbars = "vertical"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"
+            android:layout_below="@+id/ajout_depense_prefixe_description"
+            android:layout_alignLeft="@+id/editText_ajout_depense_prix"
+            android:layout_alignStart="@+id/editText_ajout_depense_prix"
+            android:layout_height="150dp" />
 
         <TextView
             android:text="Description"
@@ -90,9 +88,18 @@
             android:id="@+id/ajout_depense_prefixe_description"
             tools:text="Description"
             android:textStyle="normal|bold"
-            android:layout_marginTop="42dp"
+            android:layout_marginTop="28dp"
             android:layout_below="@+id/imageView_photo_depense"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="true" />
+
+        <TextView
+            android:id="@+id/ajout_depense_footer"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_below="@+id/button_ajout_depense_valider_ajout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp" />
 
 
     </RelativeLayout>
