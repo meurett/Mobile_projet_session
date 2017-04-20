@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
                     RootAjoutDepense rootAjoutDepense = new RootAjoutDepense();
                     return rootAjoutDepense;
                 case 3:
-                    RootAjoutDepense root1 = new RootAjoutDepense();
-                    return root1;
+                    RootStatistiques rootStatistiques = new RootStatistiques();
+                    return rootStatistiques;
                 case 4:
                     RootGDrive rootGDrive = new RootGDrive();
                     return rootGDrive;

@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import java.io.ByteArrayOutputStream;
 
@@ -31,6 +33,15 @@ public class FragmentAjoutDepense extends Fragment {
                              Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_ajout_depense, container, false);
+
+        final Spinner spinnerCategorie = (Spinner) view.findViewById(R.id.spinner_ajout_depense_categories);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                getContext(),
+                R.array.categories_array,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategorie.setAdapter(adapter);
 
         button = (Button) view.findViewById(R.id.button_ajout_depense_ajouter_photo);
         imageView = (ImageView) view.findViewById(R.id.imageView_photo_depense);
