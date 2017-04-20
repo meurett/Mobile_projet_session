@@ -1,7 +1,23 @@
 [
     {
+        "merged": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media.xml",
+        "source": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v11\\notification_template_big_media.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_action.xml",
+        "source": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v11\\notification_media_action.xml"
+    },
+    {
         "merged": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_narrow_custom.xml",
         "source": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v11\\notification_template_big_media_narrow_custom.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_cancel_action.xml",
+        "source": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v11\\notification_media_cancel_action.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_custom.xml",
+        "source": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v11\\notification_template_big_media_custom.xml"
     },
     {
         "merged": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_action.xml",
@@ -10,6 +26,14 @@
     {
         "merged": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_custom.xml",
         "source": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v11\\notification_template_big_media_custom.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_narrow.xml",
+        "source": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v11\\notification_template_big_media_narrow.xml"
+    },
+    {
+        "merged": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_narrow_custom.xml",
+        "source": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.3.1\\res\\layout-v11\\notification_template_big_media_narrow_custom.xml"
     },
     {
         "merged": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_cancel_action.xml",

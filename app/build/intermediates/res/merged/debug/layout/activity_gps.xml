@@ -1,21 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_gps"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_height="wrap_content"
+    android:gravity="center"
     tools:context="ca.ulaval.ima.projet_session.ActivityGPS">
 
     <TextView
-        android:text="AJOUTEZ CE QUE VOUS VOULEZ - C EST UNE ACTIVITY"
+        android:id="@+id/titre"
+        android:text="Enregistrement du kilométrage en cours..."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView4"
-        tools:text="AJOUTEZ CE QUE VOUS VOULEZ - C EST UNE ACTIVITY" />
+        android:layout_marginTop="29dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/labelKilometrage"
+        android:text="Kilométrage actuel :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/titre"
+        android:layout_alignLeft="@+id/titre"
+        android:layout_alignStart="@+id/titre"/>
+
+    <TextView
+        android:id="@+id/kilometrage"
+        android:text="1.2km"
+        android:layout_toRightOf="@id/labelKilometrage"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_alignBaseline="@+id/labelKilometrage"
+        android:layout_alignBottom="@+id/labelKilometrage"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        />
+
+    <TextView
+        android:id="@+id/labelPassword"
+        android:text="Temps écoulé :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelKilometrage"
+        android:layout_alignRight="@+id/labelKilometrage"
+        android:layout_alignEnd="@+id/labelKilometrage"
+        android:layout_marginTop="25dp"
+        />
+
+    <TextView
+        android:id="@+id/temps"
+        android:text="2m31s"
+        android:layout_toRightOf="@id/labelPassword"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_alignBaseline="@+id/labelPassword"
+        android:layout_alignBottom="@+id/labelPassword"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        />
+
+    <TextView
+        android:id="@+id/labelPrix"
+        android:text="Prix ($ / km) :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelPassword"
+        android:layout_alignRight="@+id/labelPassword"
+        android:layout_alignEnd="@+id/labelPassword"
+        android:layout_marginTop="25dp"
+        />
+
+    <EditText
+        android:id="@+id/prix"
+        android:text="1.26"
+        android:layout_toRightOf="@id/labelPrix"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_alignBaseline="@+id/labelPrix"
+        android:layout_alignBottom="@+id/labelPrix"
+        android:gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        />
+
+    <Button
+        android:id="@+id/button_soumettre"
+        android:text="Soumettre"
+        android:layout_below="@+id/labelPrix"
+        android:layout_width="2500dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        />
+
 </RelativeLayout>

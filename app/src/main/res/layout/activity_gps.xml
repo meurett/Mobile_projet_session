@@ -13,18 +13,19 @@
         android:text="Enregistrement du kilométrage en cours..."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        />
+        android:layout_marginTop="29dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/labelKilometrage"
         android:text="Kilométrage actuel :"
-        android:layout_marginLeft="30dp"
-        android:layout_below="@id/titre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        />
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/titre"
+        android:layout_alignLeft="@+id/titre"
+        android:layout_alignStart="@+id/titre"/>
 
     <TextView
         android:id="@+id/kilometrage"
@@ -41,7 +42,7 @@
         />
 
     <TextView
-        android:id="@+id/labelTemps"
+        android:id="@+id/labelPassword"
         android:text="Temps écoulé :"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,11 +55,11 @@
     <TextView
         android:id="@+id/temps"
         android:text="2m31s"
-        android:layout_toRightOf="@id/labelTemps"
+        android:layout_toRightOf="@id/labelPassword"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
-        android:layout_alignBaseline="@+id/labelTemps"
-        android:layout_alignBottom="@+id/labelTemps"
+        android:layout_alignBaseline="@+id/labelPassword"
+        android:layout_alignBottom="@+id/labelPassword"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,9 +71,9 @@
         android:text="Prix ($ / km) :"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/labelTemps"
-        android:layout_alignRight="@+id/labelTemps"
-        android:layout_alignEnd="@+id/labelTemps"
+        android:layout_below="@+id/labelPassword"
+        android:layout_alignRight="@+id/labelPassword"
+        android:layout_alignEnd="@+id/labelPassword"
         android:layout_marginTop="25dp"
         />
 

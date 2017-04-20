@@ -34,6 +34,10 @@
             android:name="ca.ulaval.ima.projet_session.ActivityGPS"
             android:label="GPS" >
         </activity>
+        <activity
+            android:name="ca.ulaval.ima.projet_session.ActivityGConnect"
+            android:label="Connection Google" >
+        </activity>
     </application>
 
 </manifest>

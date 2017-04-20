@@ -22,6 +22,10 @@
             android:name=".ActivityGPS"
             android:label="GPS">
         </activity>
+        <activity
+            android:name=".ActivityGConnect"
+            android:label="Connection Google">
+        </activity>
     </application>
 
 </manifest>

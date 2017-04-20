@@ -3,120 +3,120 @@
 
     <item
         is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.3.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-25.3.1_e56c7eda88218df6b62ebdea448fee796150cb68.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.3.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-25.3.1_0c911209db87f9c2993c39fdfe8a3ce3357e6938.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.3.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="95519720620b553f63afc789beba9ad582807f7c">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-25.3.1_a26956b336c84257dcb99eec15f2b22405e39d57.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.3.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-25.3.1_bcd7422758c2c9ce13ead8810cbe45f0b19dd01b.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.3.1\jars\classes.jar"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.3.1\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-25.3.1_9336a1db6e8be7759e39ffc726618ad20ee3e1f9.jar" />
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-25.3.1_8c44a24a2a4a6cf06e77403fe9e21f8741220c72.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.3.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-25.3.1_dd74e5b74e9691907a53ed0dde0ebe799d0d03fe.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.3.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-25.3.1_5004bab5f9f16779bb21e9d49e8f5d62268059cd.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\design\25.3.1\jars\classes.jar"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\design\25.3.1\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-design-25.3.1_b19cb72405e96b823b60618c1678a47cae2f7a31.jar" />
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-design-25.3.1_11bd5d69fc35a04bfa4a4bff09b81da146998d08.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\meurett\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_f2d6187345613c99b3783e2f577686386e493ee1.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.3.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-25.3.1_bc59fa9633fda89ce7c487c809f198fe1b7b4f25.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\transition\25.3.1\jars\classes.jar"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\transition\25.3.1\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-transition-25.3.1_5e235ca475959e124dea04b8e90570c9ea900592.jar" />
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-transition-25.3.1_4f2a5ca9694b75088832301d7df1acd9467579f3.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.3.1\jars\classes.jar"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-25.3.1_f7090a639e8475b4012cbcd7b1b5128e63f27c18.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-25.3.1_cddb88a31f0c8a304a875c2f72b2a3e6747162a6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-25.3.1_eeefe8c322a5f174e721455f88b23dba94592448.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-25.3.1_eb7950aa60d1d35d47f6cf55e14556d5e0827842.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.3.1\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-25.3.1_e984568399b476b3628c69ffafabc8e9dbb54c47.jar" />
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-25.3.1_8881f64c9e3c7b03f2df4997775555b0d7bd95ee.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.3.1\jars\classes.jar"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-25.3.1_f36fe1c327baf8440aa50b4e2774fd7f3fa1de18.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.3.1\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
-        <dex dex="D:\Documents\Cours\Informatique_mobile_et_application\PROJET_SESSION\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-25.3.1_43ed4c6f083987e34810fb4a1266112cacd07fac.jar" />
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-25.3.1_367eae00dc9420d8804d52515d8d93324d6915e0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Tleilaxi\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_c759cfe9598437e24cf09e0afbee85f3e5d4b8d7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-25.3.1_089b6f40ba851b0fdefa3c99c3ad6ba5879175de.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.3.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\Tleilaxi\Desktop\H2017\GIF-3101\Mobile_projet_session\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-25.3.1_6e946d62d43ac21ad4f3ab32b966fd5d936af521.jar" />
     </item>
 
 </items>

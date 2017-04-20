@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_gps"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    tools:context="ca.ulaval.ima.projet_session.ActivityGPS">
+
+    <TextView
+        android:id="@+id/titre"
+        android:text="Connection à Google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/labelUser"
+        android:text="Courriel :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/titre"
+        android:layout_toLeftOf="@+id/user"
+        android:layout_toStartOf="@+id/user"/>
+
+    <EditText
+        android:id="@+id/user"
+        android:text="something@gmail.com"
+        android:inputType="textEmailAddress"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/labelUser"
+        android:layout_alignBottom="@+id/labelUser"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp"/>
+
+    <TextView
+        android:id="@+id/labelPassword"
+        android:text="Temps écoulé :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelUser"
+        android:layout_alignRight="@+id/labelUser"
+        android:layout_alignEnd="@+id/labelUser"
+        android:layout_marginTop="25dp"
+        />
+
+    <EditText
+        android:id="@+id/temps"
+        android:text="password"
+        android:inputType="textPassword"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user"
+        android:layout_toRightOf="@+id/labelPassword"
+        android:layout_toEndOf="@+id/labelPassword"/>
+
+    <Button
+        android:id="@+id/buttonConnect"
+        android:text="Connecter"
+        android:layout_below="@+id/labelPassword"
+        android:layout_width="2500dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        />
+
+</RelativeLayout>

@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\res\\merged\\debug\\layout-sw600dp-v13\\design_layout_snackbar.xml",
+        "source": "C:\\Users\\Tleilaxi\\Desktop\\H2017\\GIF-3101\\Mobile_projet_session\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\25.3.1\\res\\layout-sw600dp-v13\\design_layout_snackbar.xml"
+    },
+    {
         "merged": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\res\\merged\\debug\\layout-sw600dp-v13\\design_layout_snackbar.xml",
         "source": "D:\\Documents\\Cours\\Informatique_mobile_et_application\\PROJET_SESSION\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\25.3.1\\res\\layout-sw600dp-v13\\design_layout_snackbar.xml"
     }
