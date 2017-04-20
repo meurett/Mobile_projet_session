@@ -103,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
                     RootAjoutDepense rootAjoutDepense = new RootAjoutDepense();
                     return rootAjoutDepense;
                 case 3:
+                    RootAjoutDepense root1 = new RootAjoutDepense();
+                    return root1;
+                case 4:
                     RootGDrive rootGDrive = new RootGDrive();
                     return rootGDrive;
                 default:
@@ -112,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 4 total pages.
-            return 4;
+            // Show 5 total pages.
+            return 5;
         }
 
         @Override
@@ -126,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     return "Ajouter dépense";
                 case 3:
+                    return "Statistiques";
+                case 4:
                     return "GDrive";
             }
             return null;
