@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/liste_depense_item_prefixe_description"
+            android:textStyle="normal|bold|italic"
+            android:layout_marginTop="28dp"
+            android:layout_below="@+id/imageView_photo_liste_depense_item"
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="true" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_liste_depense_item_categories"
+            android:layout_alignTop="@+id/liste_depense_item_prefixe_categorie"
+            android:layout_alignRight="@+id/editText_liste_depense_item_prix"
+            android:layout_alignEnd="@+id/editText_liste_depense_item_prix" />
+
+        <TextView
+            android:text="Prix :"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/liste_depense_item_prefixe_prix"
+            tools:text="Prix :"
+            android:textStyle="normal|bold"
+            android:textAllCaps="true"
+            android:layout_alignBaseline="@+id/editText_liste_depense_item_prix"
+            android:layout_alignBottom="@+id/editText_liste_depense_item_prix"
+            android:layout_alignLeft="@+id/liste_depense_item_prefixe_categorie"
+            android:layout_alignStart="@+id/liste_depense_item_prefixe_categorie" />
+
+        <Button
+            android:text="VALIDER AJOUT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_liste_depense_item_valider_ajout"
+            tools:text="VALIDER AJOUT"
+            android:layout_marginTop="26dp"
+            android:layout_below="@+id/editText_liste_depense_item_description"
+            android:layout_toLeftOf="@+id/imageView_photo_liste_depense_item"
+            android:layout_toStartOf="@+id/imageView_photo_liste_depense_item" />
+
+        <TextView
+            android:text="Catégorie :"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="57dp"
+            android:id="@+id/liste_depense_item_prefixe_categorie"
+            android:textStyle="normal|bold"
+            tools:text="Catégorie :"
+            android:textAllCaps="true"
+            android:layout_marginRight="43dp"
+            android:layout_marginEnd="43dp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/liste_depense_item_prefixe_description"
+            android:layout_toStartOf="@+id/liste_depense_item_prefixe_description" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:layout_marginTop="26dp"
+            android:id="@+id/editText_liste_depense_item_prix"
+            android:hint="ex. 2$"
+            android:textSize="12sp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_below="@+id/spinner_liste_depense_item_categories"
+            android:layout_toRightOf="@+id/button_liste_depense_item_ajouter_photo"
+            android:layout_toEndOf="@+id/button_liste_depense_item_ajouter_photo" />
+
+        <ImageView
+            app:srcCompat="@android:color/darker_gray"
+            android:id="@+id/imageView_photo_liste_depense_item"
+            android:background="@android:drawable/alert_dark_frame"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="29dp"
+            android:layout_below="@+id/editText_liste_depense_item_prix"
+            android:layout_alignRight="@+id/editText_liste_depense_item_prix"
+            android:layout_alignEnd="@+id/editText_liste_depense_item_prix" />
+
+        <Button
+            android:text="MODIFIER PHOTO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_liste_depense_item_ajouter_photo"
+            tools:text="MODIFIER PHOTO"
+            android:textSize="14sp"
+            android:elevation="0dp"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/liste_depense_item_prefixe_prix"
+            android:layout_alignStart="@+id/liste_depense_item_prefixe_prix" />
+
+        <EditText
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editText_liste_depense_item_description"
+            android:hint="Entrez la description de votre dépense ici"
+            android:scrollbars = "vertical"
+            android:textSize="14sp"
+            android:layout_height="60dp"
+            android:textAlignment="center"
+            android:textStyle="normal|italic"
+            android:layout_marginTop="17dp"
+            android:layout_width="340dp"
+            android:layout_below="@+id/imageView_photo_liste_depense_item"
+            android:layout_alignRight="@+id/imageView_photo_liste_depense_item"
+            android:layout_alignEnd="@+id/imageView_photo_liste_depense_item" />
+
+
+    </RelativeLayout>
+
+</ScrollView>

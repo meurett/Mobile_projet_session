@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Catégories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_statistiques_prefixe_montant_categories"
+        android:textAllCaps="true"
+        android:textStyle="normal|bold"
+        tools:text="Catégories"
+        android:layout_marginTop="65dp"
+        android:layout_below="@+id/textView_statistiques_montant_total"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Montant total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_statistiques_prefixe_montant_total"
+        android:textAllCaps="true"
+        android:textStyle="normal|bold"
+        tools:text="Montant total"
+        android:layout_marginTop="47dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:id="@+id/textView_statistiques_montant_total"
+        android:layout_below="@+id/textView_statistiques_prefixe_montant_total"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Essence :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="66dp"
+        android:id="@+id/textView_statistiques_prefixe_montant_essence"
+        android:layout_below="@+id/textView_statistiques_prefixe_montant_categories"
+        android:layout_toLeftOf="@+id/textView_statistiques_prefixe_montant_total"
+        android:layout_toStartOf="@+id/textView_statistiques_prefixe_montant_total"
+        tools:text="Essence :" />
+
+    <TextView
+        android:text="Restaurant :"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_statistiques_prefixe_montant_essence"
+        android:layout_alignLeft="@+id/textView_statistiques_prefixe_montant_essence"
+        android:layout_alignStart="@+id/textView_statistiques_prefixe_montant_essence"
+        android:layout_marginTop="83dp"
+        android:id="@+id/textView_statistiques_prefixe_montant_restaurant"
+        tools:text="Restaurant :" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView_statistiques_prefixe_montant_restaurant"
+        android:layout_toRightOf="@+id/textView_statistiques_prefixe_montant_total"
+        android:layout_toEndOf="@+id/textView_statistiques_prefixe_montant_total"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:id="@+id/textView_statistiques_montant_essence" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView_statistiques_prefixe_montant_restaurant"
+        android:layout_alignRight="@+id/textView_statistiques_montant_essence"
+        android:layout_alignEnd="@+id/textView_statistiques_montant_essence"
+        android:id="@+id/textView_statistiques_montant_restaurant" />
+
+
+</RelativeLayout>
