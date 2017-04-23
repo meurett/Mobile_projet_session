@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//import android.app.Notification;
 import android.app.NotificationManager;
-//import android.app.PendingIntent;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.location.LocationManager;
 import android.content.Context;
@@ -29,16 +29,16 @@ public class ServiceGPS extends Service
     static final int MSG_SET_INT_VALUE = 3;
     static final int MSG_SET_STRING_VALUE = 4;
     static final int MSG_SET_DISTANCE_VALUE = 5;
+    static final int NOTIFICATION_ID = 1;
 
-    private NotificationManager notificationManager;
     private Timer timer = new Timer();
     private int counter = 0, incrementby = 1;
     private static boolean isRunning = false;
     ArrayList<Messenger> messengers = new ArrayList<>();
     final Messenger toServiceMessenger = new Messenger(new ServiceHandler());
 
-    LocationManager locationManager;
-    LocationListener locationListener = new LocationListener();
+    private LocationManager locationManager;
+    private LocationListener locationListener = new LocationListener();
 
     @Override
     public IBinder onBind(Intent intent)
@@ -90,7 +90,7 @@ public class ServiceGPS extends Service
         }
     }
 
-    private void sendMessageToUI2(float floatvaluetosend)
+    private void sendMessageToUI2(float distance)
     {
         //Reverse order to allow removal while iterating
         for (int i = messengers.size() - 1; i >= 0; i--)
@@ -98,7 +98,7 @@ public class ServiceGPS extends Service
             try
             {
                 Bundle bundle = new Bundle();
-                bundle.putFloat("distance", floatvaluetosend);
+                bundle.putFloat("distance", distance);
                 Message message = Message.obtain(null, MSG_SET_DISTANCE_VALUE);
                 message.setData(bundle);
                 messengers.get(i).send(message);
@@ -114,8 +114,7 @@ public class ServiceGPS extends Service
     public void onCreate()
     {
         super.onCreate();
-        Log.i("MyService", "Service Started.");
-        //showNotification();
+        showNotification();
         timer.scheduleAtFixedRate(new TimerTask(){ public void run() {onTimerTick();}}, 0, 100L);
         isRunning = true;
 
@@ -180,26 +179,23 @@ public class ServiceGPS extends Service
         }
     }
 
-//    private void showNotification()
-//    {
-//        notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-//        // In this sample, we'll use the same text for the ticker and the expanded notification
-//        CharSequence text = getText(R.string.service_started);
-//        // Set the icon, scrolling text and timestamp
-//        Notification notification = new Notification(R.drawable.icon, text, System.currentTimeMillis());
-//        // The PendingIntent to launch our activity if the user selects this notification
-//        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
-//        // Set the info for the views that show in the notification panel.
-//        notification.setLatestEventInfo(this, getText(R.string.service_label), text, contentIntent);
-//        // Send the notification.
-//        // We use a layout id because it is a unique number.  We use it later to cancel.
-//        notificationManager.notify(R.string.service_started, notification);
-//    }
+    private void showNotification()
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+            .setSmallIcon(R.drawable.icon_gps_tracking)
+            .setContentTitle("My Notification Title")
+            .setContentText("Something interesting happened")
+            .setOngoing(true);
+        Intent targetIntent = new Intent(this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, targetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
+        NotificationManager nManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        nManager.notify(NOTIFICATION_ID, builder.build());
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        //Run until stopped
         return START_STICKY;
     }
 
@@ -225,7 +221,7 @@ public class ServiceGPS extends Service
         super.onDestroy();
         if (timer != null) {timer.cancel();}
         counter=0;
-        //notificationManager.cancel(R.string.service_started); // Cancel the persistent notification.
+        ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE)).cancel(NOTIFICATION_ID);
         isRunning = false;
     }
 }
