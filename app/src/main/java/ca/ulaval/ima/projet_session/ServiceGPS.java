@@ -19,65 +19,63 @@ import android.util.Log;
 
 public class ServiceGPS extends Service
 {
-    private NotificationManager notificationManager;
-    private Timer timer = new Timer();
-    private int counter = 0, incrementby = 1;
-    private static boolean isRunning = false;
-
-    ArrayList<Messenger> clients = new ArrayList<>(); // Keeps track of all current registered clients.
-    int mValue = 0; // Holds last value set by a client.
     static final int MSG_REGISTER_CLIENT = 1;
     static final int MSG_UNREGISTER_CLIENT = 2;
     static final int MSG_SET_INT_VALUE = 3;
     static final int MSG_SET_STRING_VALUE = 4;
-    final Messenger mMessenger = new Messenger(new IncomingHandler()); // Target we publish for clients to send messages to IncomingHandler.
+
+    private NotificationManager notificationManager;
+    private Timer timer = new Timer();
+    private int counter = 0, incrementby = 1;
+    private static boolean isRunning = false;
+    ArrayList<Messenger> messengers = new ArrayList<>();
+    final Messenger toServiceMessenger = new Messenger(new ServiceHandler());
 
     @Override
     public IBinder onBind(Intent intent)
     {
-        return mMessenger.getBinder();
+        return toServiceMessenger.getBinder();
     }
 
-    // Handler of incoming messages from clients.
-    class IncomingHandler extends Handler
+    private class ServiceHandler extends Handler
     {
         @Override
-        public void handleMessage(Message msg)
+        public void handleMessage(Message message)
         {
-            switch (msg.what) {
+            switch (message.what)
+            {
                 case MSG_REGISTER_CLIENT:
-                    clients.add(msg.replyTo);
+                    messengers.add(message.replyTo);
                     break;
                 case MSG_UNREGISTER_CLIENT:
-                    clients.remove(msg.replyTo);
+                    messengers.remove(message.replyTo);
                     break;
                 case MSG_SET_INT_VALUE:
-                    incrementby = msg.arg1;
+                    incrementby = message.arg1;
                     break;
                 default:
-                    super.handleMessage(msg);
+                    super.handleMessage(message);
             }
         }
     }
 
     private void sendMessageToUI(int intvaluetosend)
     {
-        for (int i = clients.size()-1; i>=0; i--) {
-            try {
-                // Send data as an Integer
-                clients.get(i).send(Message.obtain(null, MSG_SET_INT_VALUE, intvaluetosend, 0));
-
-                //Send data as a String
-                Bundle b = new Bundle();
-                b.putString("str1", "ab" + intvaluetosend + "cd");
+        //Reverse order to allow removal while iterating
+        for (int i = messengers.size() - 1; i >= 0; i--)
+        {
+            try
+            {
+                messengers.get(i).send(Message.obtain(null, MSG_SET_INT_VALUE, intvaluetosend, 0));
+                Bundle bundle = new Bundle();
+                bundle.putString("str1", "ab" + intvaluetosend + "cd");
                 Message msg = Message.obtain(null, MSG_SET_STRING_VALUE);
-                msg.setData(b);
-                clients.get(i).send(msg);
-
+                msg.setData(bundle);
+                messengers.get(i).send(msg);
             }
-            catch (RemoteException e) {
-                // The client is dead. Remove it from the list; we are going through the list from back to front so this is safe to do inside the loop.
-                clients.remove(i);
+            catch (RemoteException e)
+            {
+                messengers.remove(i);
             }
         }
     }
@@ -90,6 +88,9 @@ public class ServiceGPS extends Service
         //showNotification();
         timer.scheduleAtFixedRate(new TimerTask(){ public void run() {onTimerTick();}}, 0, 100L);
         isRunning = true;
+
+        //TEST
+
     }
 
 //    private void showNotification()
@@ -111,8 +112,8 @@ public class ServiceGPS extends Service
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        Log.i("MyService", "Received start id " + startId + ": " + intent);
-        return START_STICKY; // run until explicitly stopped.
+        //Run until stopped
+        return START_STICKY;
     }
 
     public static boolean isRunning()
@@ -120,18 +121,15 @@ public class ServiceGPS extends Service
         return isRunning;
     }
 
-
     private void onTimerTick()
     {
-        Log.i("TimerTick", "Timer doing work." + counter);
-        try {
+        try
+        {
             counter += incrementby;
             sendMessageToUI(counter);
 
         }
-        catch (Throwable t) { //you should always ultimately catch all exceptions in timer tasks.
-            Log.e("TimerTick", "Timer Tick Failed.", t);
-        }
+        catch (Throwable t) { Log.e("TimerTick", "Timer Tick Failed.", t); }
     }
 
     @Override
@@ -141,7 +139,6 @@ public class ServiceGPS extends Service
         if (timer != null) {timer.cancel();}
         counter=0;
         //notificationManager.cancel(R.string.service_started); // Cancel the persistent notification.
-        Log.i("MyService", "Service Stopped.");
         isRunning = false;
     }
 }
