@@ -1,6 +1,7 @@
 package ca.ulaval.ima.projet_session;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,6 +17,10 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
+import android.location.LocationManager;
+import android.content.Context;
+import android.location.Location;
+import android.location.Criteria;
 
 public class ServiceGPS extends Service
 {
@@ -23,6 +28,7 @@ public class ServiceGPS extends Service
     static final int MSG_UNREGISTER_CLIENT = 2;
     static final int MSG_SET_INT_VALUE = 3;
     static final int MSG_SET_STRING_VALUE = 4;
+    static final int MSG_SET_DISTANCE_VALUE = 5;
 
     private NotificationManager notificationManager;
     private Timer timer = new Timer();
@@ -30,6 +36,9 @@ public class ServiceGPS extends Service
     private static boolean isRunning = false;
     ArrayList<Messenger> messengers = new ArrayList<>();
     final Messenger toServiceMessenger = new Messenger(new ServiceHandler());
+
+    LocationManager locationManager;
+    LocationListener locationListener = new LocationListener();
 
     @Override
     public IBinder onBind(Intent intent)
@@ -46,6 +55,7 @@ public class ServiceGPS extends Service
             {
                 case MSG_REGISTER_CLIENT:
                     messengers.add(message.replyTo);
+                    locationListener.initialize();
                     break;
                 case MSG_UNREGISTER_CLIENT:
                     messengers.remove(message.replyTo);
@@ -69,9 +79,29 @@ public class ServiceGPS extends Service
                 messengers.get(i).send(Message.obtain(null, MSG_SET_INT_VALUE, intvaluetosend, 0));
                 Bundle bundle = new Bundle();
                 bundle.putString("str1", "ab" + intvaluetosend + "cd");
-                Message msg = Message.obtain(null, MSG_SET_STRING_VALUE);
-                msg.setData(bundle);
-                messengers.get(i).send(msg);
+                Message message = Message.obtain(null, MSG_SET_STRING_VALUE);
+                message.setData(bundle);
+                messengers.get(i).send(message);
+            }
+            catch (RemoteException e)
+            {
+                messengers.remove(i);
+            }
+        }
+    }
+
+    private void sendMessageToUI2(float floatvaluetosend)
+    {
+        //Reverse order to allow removal while iterating
+        for (int i = messengers.size() - 1; i >= 0; i--)
+        {
+            try
+            {
+                Bundle bundle = new Bundle();
+                bundle.putFloat("distance", floatvaluetosend);
+                Message message = Message.obtain(null, MSG_SET_DISTANCE_VALUE);
+                message.setData(bundle);
+                messengers.get(i).send(message);
             }
             catch (RemoteException e)
             {
@@ -90,7 +120,64 @@ public class ServiceGPS extends Service
         isRunning = true;
 
         //TEST
+        locationManager = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        try
+        {
+            List<String> test = locationManager.getAllProviders();
+            Criteria criteria = new Criteria();
+            criteria.setAccuracy(Criteria.ACCURACY_FINE);
+            String provider = locationManager.getBestProvider(criteria, true);
 
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10, locationListener);
+
+        }
+        catch (java.lang.SecurityException e) {}
+        catch (IllegalArgumentException e)
+        {
+            Exception exception = e;
+        }
+    }
+
+    private class LocationListener implements android.location.LocationListener
+    {
+        Location lastLocation = null;
+        float distanceTraveled = 0;
+
+        public void initialize()
+        {
+            sendMessageToUI2(distanceTraveled);
+        }
+
+        @Override
+        public void onLocationChanged(Location location)
+        {
+            if (lastLocation != null)
+            {
+                distanceTraveled += lastLocation.distanceTo(location);
+                sendMessageToUI2(distanceTraveled);
+            }
+            else
+            {
+                distanceTraveled += 1;
+                sendMessageToUI2(distanceTraveled);
+            }
+            lastLocation = location;
+        }
+
+        @Override
+        public void onProviderDisabled(String provider)
+        {
+        }
+
+        @Override
+        public void onProviderEnabled(String provider)
+        {
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras)
+        {
+        }
     }
 
 //    private void showNotification()

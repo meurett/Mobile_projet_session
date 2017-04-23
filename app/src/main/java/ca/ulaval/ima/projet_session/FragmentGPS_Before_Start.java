@@ -23,7 +23,7 @@ import android.app.Activity;
 public class FragmentGPS_Before_Start extends Fragment
 {
     Button btnUpby1, btnUpby10;
-    TextView textStatus, textIntValue, textStrValue;
+    TextView textStatus, textIntValue, textStrValue, textDistanceValue;
     Messenger toServiceMessenger = null;
     boolean isBound;
     final Messenger toFragmentMessenger = new Messenger(new FragmentHandler());
@@ -41,6 +41,10 @@ public class FragmentGPS_Before_Start extends Fragment
                 case ServiceGPS.MSG_SET_STRING_VALUE:
                     String str1 = message.getData().getString("str1");
                     textStrValue.setText("Str Message: " + str1);
+                    break;
+                case ServiceGPS.MSG_SET_DISTANCE_VALUE:
+                    float distance = message.getData().getFloat("distance");
+                    textDistanceValue.setText(Float.toString(distance));
                     break;
                 default:
                     super.handleMessage(message);
@@ -80,6 +84,7 @@ public class FragmentGPS_Before_Start extends Fragment
         textStatus = (TextView)view.findViewById(R.id.textStatus);
         textIntValue = (TextView)view.findViewById(R.id.textIntValue);
         textStrValue = (TextView)view.findViewById(R.id.textStrValue);
+        textDistanceValue = (TextView)view.findViewById(R.id.textDistance);
         btnUpby1 = (Button)view.findViewById(R.id.btnUpby1);
         btnUpby10 = (Button)view.findViewById(R.id.btnUpby10);
 

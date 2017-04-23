@@ -45,6 +45,13 @@
         android:text="String Value Goes Here"
         android:textSize="24sp" />
 
+    <TextView
+        android:id="@+id/textDistance"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Distance Value Goes Here"
+        android:textSize="24sp" />
+
     <RelativeLayout
         android:id="@+id/RelativeLayout03"
         android:layout_width="fill_parent"

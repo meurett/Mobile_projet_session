@@ -9,3 +9,4 @@
 .externalNativeBuild
 app/build/*
 ./.idea/
+app/app-release.apk
