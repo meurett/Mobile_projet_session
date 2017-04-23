@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.ulaval.ima.projet_session">
     <uses-feature android:name="android.hardware.camera"></uses-feature>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -18,14 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ActivityGPS"
-            android:label="GPS">
-        </activity>
+        <service android:name=".ServiceGPS"></service>
         <activity
             android:name=".ActivityGConnect"
             android:label="Connection Google">
         </activity>
     </application>
-
 </manifest>
