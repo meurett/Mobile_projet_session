@@ -1,13 +1,9 @@
 package ca.ulaval.ima.projet_session;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,10 +13,13 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.location.LocationManager;
-import android.content.Context;
-import android.location.Location;
 import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ServiceGPS extends Service
 {
@@ -30,15 +29,38 @@ public class ServiceGPS extends Service
     static final int MSG_SET_STRING_VALUE = 4;
     static final int MSG_SET_DISTANCE_VALUE = 5;
     static final int NOTIFICATION_ID = 1;
+    static final int UPDATE_DISTANCE = 0;
 
     private Timer timer = new Timer();
     private int counter = 0, incrementby = 1;
     private static boolean isRunning = false;
-    ArrayList<Messenger> messengers = new ArrayList<>();
-    final Messenger toServiceMessenger = new Messenger(new ServiceHandler());
-
-    private LocationManager locationManager;
+    private ArrayList<Messenger> messengers = new ArrayList<>();
+    private final Messenger toServiceMessenger = new Messenger(new ServiceHandler());
+    private LocationManager locationManager = null;
     private LocationListener locationListener = new LocationListener();
+
+    @Override
+    public void onCreate()
+    {
+        super.onCreate();
+        showNotification();
+        timer.scheduleAtFixedRate(new TimerTask(){ public void run() {onTimerTick();}}, 0, 100L);
+        isRunning = true;
+        locationManager = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        try
+        {
+            List<String> test = locationManager.getAllProviders();
+            Criteria criteria = new Criteria();
+            criteria.setAccuracy(Criteria.ACCURACY_FINE);
+            String provider = locationManager.getBestProvider(criteria, true);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, UPDATE_DISTANCE, locationListener);
+        }
+        catch (java.lang.SecurityException e) {}
+        catch (IllegalArgumentException e)
+        {
+            Exception exception = e;
+        }
+    }
 
     @Override
     public IBinder onBind(Intent intent)
@@ -46,27 +68,25 @@ public class ServiceGPS extends Service
         return toServiceMessenger.getBinder();
     }
 
-    private class ServiceHandler extends Handler
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId)
     {
-        @Override
-        public void handleMessage(Message message)
-        {
-            switch (message.what)
-            {
-                case MSG_REGISTER_CLIENT:
-                    messengers.add(message.replyTo);
-                    locationListener.initialize();
-                    break;
-                case MSG_UNREGISTER_CLIENT:
-                    messengers.remove(message.replyTo);
-                    break;
-                case MSG_SET_INT_VALUE:
-                    incrementby = message.arg1;
-                    break;
-                default:
-                    super.handleMessage(message);
-            }
-        }
+        return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        if (timer != null) {timer.cancel();}
+        counter=0;
+        ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE)).cancel(NOTIFICATION_ID);
+        isRunning = false;
+    }
+
+    public static boolean isRunning()
+    {
+        return isRunning;
     }
 
     private void sendMessageToUI(int intvaluetosend)
@@ -107,33 +127,6 @@ public class ServiceGPS extends Service
             {
                 messengers.remove(i);
             }
-        }
-    }
-
-    @Override
-    public void onCreate()
-    {
-        super.onCreate();
-        showNotification();
-        timer.scheduleAtFixedRate(new TimerTask(){ public void run() {onTimerTick();}}, 0, 100L);
-        isRunning = true;
-
-        //TEST
-        locationManager = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        try
-        {
-            List<String> test = locationManager.getAllProviders();
-            Criteria criteria = new Criteria();
-            criteria.setAccuracy(Criteria.ACCURACY_FINE);
-            String provider = locationManager.getBestProvider(criteria, true);
-
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10, locationListener);
-
-        }
-        catch (java.lang.SecurityException e) {}
-        catch (IllegalArgumentException e)
-        {
-            Exception exception = e;
         }
     }
 
@@ -193,17 +186,6 @@ public class ServiceGPS extends Service
         nManager.notify(NOTIFICATION_ID, builder.build());
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId)
-    {
-        return START_STICKY;
-    }
-
-    public static boolean isRunning()
-    {
-        return isRunning;
-    }
-
     private void onTimerTick()
     {
         try
@@ -215,13 +197,26 @@ public class ServiceGPS extends Service
         catch (Throwable t) { Log.e("TimerTick", "Timer Tick Failed.", t); }
     }
 
-    @Override
-    public void onDestroy()
+    private class ServiceHandler extends Handler
     {
-        super.onDestroy();
-        if (timer != null) {timer.cancel();}
-        counter=0;
-        ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE)).cancel(NOTIFICATION_ID);
-        isRunning = false;
+        @Override
+        public void handleMessage(Message message)
+        {
+            switch (message.what)
+            {
+                case MSG_REGISTER_CLIENT:
+                    messengers.add(message.replyTo);
+                    locationListener.initialize();
+                    break;
+                case MSG_UNREGISTER_CLIENT:
+                    messengers.remove(message.replyTo);
+                    break;
+                case MSG_SET_INT_VALUE:
+                    incrementby = message.arg1;
+                    break;
+                default:
+                    super.handleMessage(message);
+            }
+        }
     }
 }
