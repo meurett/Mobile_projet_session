@@ -1,7 +1,11 @@
 package ca.ulaval.ima.projet_session;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +22,11 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 public class FragmentListeDepenses_Item extends Fragment {
+
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
+    Button buttonEditImage;
+    ImageView imageViewImage;
+    Bitmap bitmap;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -60,6 +70,22 @@ public class FragmentListeDepenses_Item extends Fragment {
         spinnerCategorie.setSelection(index);
 
         // ==============================
+        //      SET IMAGE HANDLING
+        // ==============================
+        imageViewImage = (ImageView) view.findViewById(R.id.imageView_photo_liste_depense_item);
+        bitmap = (((MainActivity)getActivity()).mDatabaseHelper).getImage(date);
+        imageViewImage.setImageBitmap(bitmap);
+
+        buttonEditImage = (Button) view.findViewById(R.id.button_liste_depense_item_ajouter_photo);
+        buttonEditImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            }
+        });
+
+        // ==============================
         //        SET CHANGE BUTTON
         // ==============================
 
@@ -76,7 +102,7 @@ public class FragmentListeDepenses_Item extends Fragment {
                           if (prix.equals("")){
                               Toast.makeText(getActivity(), "\"PRIX\" doit être non vide !", Toast.LENGTH_SHORT).show();
                           } else {
-                              (((MainActivity)getActivity()).mDatabaseHelper).updateDepense(date, prix, description, categorie);
+                              (((MainActivity)getActivity()).mDatabaseHelper).updateDepense(date, prix, description, categorie, BitmapHelper.getBytes(bitmap));
                               Toast.makeText(getActivity(), "Update succed !", Toast.LENGTH_SHORT).show();
                           }
                     }
@@ -84,6 +110,16 @@ public class FragmentListeDepenses_Item extends Fragment {
         );
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                bitmap = (Bitmap) data.getExtras().get("data");
+                imageViewImage.setImageBitmap(bitmap);
+            }
+        }
     }
 
 }

@@ -80,6 +80,7 @@ public class FragmentListeDepenses extends Fragment {
         categorie = new ArrayList<>();
         description = new ArrayList<>();
         resume = new ArrayList<>();
+
         populateListView();
         */
     }
@@ -99,7 +100,6 @@ public class FragmentListeDepenses extends Fragment {
             categorie.add(categorieString);
 
             description.add(data.getString(3));
-            //image.add(data.getString(4));
 
             calendar.setTimeInMillis(Long.parseLong(dateString));
             String mMonth = getMonthFromInt(calendar.get(Calendar.MONTH));

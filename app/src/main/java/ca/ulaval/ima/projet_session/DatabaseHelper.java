@@ -5,9 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 
 
-public class DatabaseHelper extends SQLiteOpenHelper{
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME = "depense_table";
     private static final String COL_0 = "date";
@@ -24,19 +25,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        /*
         String createTable = "CREATE TABLE " + TABLE_NAME + "(" +
                 COL_0 + " INTEGER PRIMARY KEY, " +
                 COL_1 + " VARCHAR, " +
                 COL_2 + " VARCHAR, " +
                 COL_3 + " VARCHAR, " +
-                COL_4 + " XXX);";
-        */
-        String createTable = "CREATE TABLE " + TABLE_NAME + "(" +
-                COL_0 + " INTEGER PRIMARY KEY, " +
-                COL_1 + " VARCHAR, " +
-                COL_2 + " VARCHAR, " +
-                COL_3 + " VARCHAR);";
+                COL_4 + " BLOB);";
         db.execSQL(createTable);
     }
 
@@ -46,8 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    //public boolean addData(String date, String categorie, String prix, String description, XXX image){
-    public boolean addData(String date, String categorie, String prix, String description){
+    public boolean addData(String date, String categorie, String prix, String description, byte[] image) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -55,30 +48,40 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(COL_1, prix);
         contentValues.put(COL_2, categorie);
         contentValues.put(COL_3, description);
-        //contentValues.put(COL_4, image);
+        contentValues.put(COL_4, image);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
 
         return (result != -1);
     }
 
-    public Cursor getData(){
+    public Cursor getData() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
         return db.rawQuery(query, null);
     }
 
-    public void updateDepense(String date, String prix, String description, String categorie){
+    public void updateDepense(String date, String prix, String description, String categorie, byte[] image) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String descriptionString = "";
-        if (!(description.equals(""))){
-            descriptionString = "," + COL_3 + " = '" + description + "' ";
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COL_0, date);
+        contentValues.put(COL_1, prix);
+        contentValues.put(COL_2, categorie);
+        if (!(description.equals(""))) {
+            contentValues.put(COL_3, description);
         }
-        String query = "UPDATE " + TABLE_NAME + " SET " +
-                COL_1 + " = '" + prix + "' ," +
-                COL_2 + " = '" + categorie + "'" +
-                descriptionString +
-                "WHERE " + COL_0 + " = '" + date + "'";
-        db.execSQL(query);
+        contentValues.put(COL_4, image);
+
+        db.update(TABLE_NAME, contentValues, COL_0+"= ?", new String[]{date});
+    }
+
+    public Bitmap getImage(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT image FROM " + TABLE_NAME +
+                " WHERE " + COL_0 + " = '" + date + "';";
+        Cursor data = db.rawQuery(query, null);
+        data.moveToNext();
+        return BitmapHelper.getBitmap(data.getBlob(0));
     }
 }

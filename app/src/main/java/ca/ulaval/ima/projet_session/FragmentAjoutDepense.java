@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -51,7 +52,9 @@ public class FragmentAjoutDepense extends Fragment {
         spinnerCategorie.setAdapter(adapter);
 
         buttonAddImage = (Button) view.findViewById(R.id.button_ajout_depense_ajouter_photo);
+        bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.icon_no_image)).getBitmap();
         imageViewImage = (ImageView) view.findViewById(R.id.imageView_photo_depense);
+        imageViewImage.setImageBitmap(bitmap);
 
         buttonAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,13 +93,12 @@ public class FragmentAjoutDepense extends Fragment {
                       Toast.makeText(getActivity(), "\"PRIX\" doit être non vide !", Toast.LENGTH_SHORT).show();
                   } else {
                       DatabaseHelper db = ((MainActivity)getActivity()).mDatabaseHelper;
-                      boolean insertData = db.addData(date, categorie, prix, description);
+                      boolean insertData = db.addData(date, categorie, prix, description, BitmapHelper.getBytes(bitmap));
                       if (insertData){
                           Toast.makeText(getActivity(), "Insertion avec succès !", Toast.LENGTH_SHORT).show();
                       } else {
                           Toast.makeText(getActivity(), "ERREUR ! :(", Toast.LENGTH_SHORT).show();
                       }
-                      Log.d("DD", prix + " , " + description + " , " + categorie + " , " + date);
                   }
               }
           }
@@ -109,16 +111,7 @@ public class FragmentAjoutDepense extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-
-                Bitmap bmp = (Bitmap) data.getExtras().get("data");
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-
-                bitmap = BitmapFactory.decodeByteArray(byteArray, 0,
-                        byteArray.length);
-
+                bitmap = (Bitmap) data.getExtras().get("data");
                 imageViewImage.setImageBitmap(bitmap);
             }
         }
