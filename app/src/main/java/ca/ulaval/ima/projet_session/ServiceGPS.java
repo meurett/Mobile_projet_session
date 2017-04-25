@@ -179,11 +179,14 @@ public class ServiceGPS extends Service
             .setContentTitle("My Notification Title")
             .setContentText("Something interesting happened")
             .setOngoing(true);
-        Intent targetIntent = new Intent(this, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, targetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setAction("android.intent.action.MAIN").addCategory("android.intent.category.LAUNCHER");
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         builder.setContentIntent(contentIntent);
-        NotificationManager nManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        nManager.notify(NOTIFICATION_ID, builder.build());
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
     private void onTimerTick()
