@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements DepenseListener
 {
+    DatabaseHelper mDatabaseHelper;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private ArrayList<Depense> depenses = new ArrayList<>();
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        mDatabaseHelper = new DatabaseHelper(this);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);

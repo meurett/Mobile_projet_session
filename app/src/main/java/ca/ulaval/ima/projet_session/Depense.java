@@ -3,7 +3,6 @@ package ca.ulaval.ima.projet_session;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Date;
 
 public class Depense implements Parcelable {
     public String getDate() {
@@ -30,9 +29,18 @@ public class Depense implements Parcelable {
         this.prix = prix;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     private String date;
     private String categorie;
     private String prix;
+    private String description;
 
     @Override
     public int describeContents() {
@@ -44,6 +52,7 @@ public class Depense implements Parcelable {
         dest.writeString(this.date);
         dest.writeString(this.categorie);
         dest.writeString(this.prix);
+        dest.writeString(this.description);
     }
 
     public Depense() {
@@ -53,6 +62,7 @@ public class Depense implements Parcelable {
         this.date = in.readString();
         this.categorie = in.readString();
         this.prix = in.readString();
+        this.description = in.readString();
     }
 
     public static final Creator<Depense> CREATOR = new Creator<Depense>() {

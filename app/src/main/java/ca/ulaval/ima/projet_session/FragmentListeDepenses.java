@@ -1,5 +1,6 @@
 package ca.ulaval.ima.projet_session;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -9,14 +10,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class FragmentListeDepenses extends Fragment {
 
     private ListView myList;
+    private ArrayList<String> date;
+    private ArrayList<String> prix;
+    private ArrayList<String> categorie;
+    private ArrayList<String> description;
+    private ArrayList<String> resume;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -25,67 +30,32 @@ public class FragmentListeDepenses extends Fragment {
     {
         View view = inflater.inflate(R.layout.fragment_liste_depenses, container, false);
 
-        final ArrayList<String> depenses = new ArrayList<>();
-        depenses.add("{" +
-                "\"date\":\"12/02\"," +
-                "\"categorie\":\"Essence\"," +
-                "\"description\":\"Ceci est une description tres jolie\"," +
-                "\"prix\":\"100\"" +
-                "}");
-        depenses.add("{" +
-                "\"date\":\"14/02\"," +
-                "\"categorie\":\"Restaurant\"," +
-                "\"description\":\"Kepuik !\"," +
-                "\"prix\":\"70\"" +
-                "}");
-        depenses.add("{" +
-                "\"date\":\"20/07\"," +
-                "\"categorie\":\"Essence\"," +
-                "\"description\":\"Ceci est une description tres jolie\"," +
-                "\"prix\":\"50\"" +
-                "}");
+        date = new ArrayList<>();
+        prix = new ArrayList<>();
+        categorie = new ArrayList<>();
+        description = new ArrayList<>();
+        resume = new ArrayList<>();
+
+        populateListView();
 
         myList = (ListView) view.findViewById(R.id.liste_depenses);
-        myList.setAdapter(new Adapter_Fragment_ListeDepense(getActivity(), depenses));
+        myList.setAdapter(new Adapter_Fragment_ListeDepense(getActivity(), resume));
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String date = "";
-                try {
-                    date = (new JSONObject(depenses.get(position))).getString("date");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                String categorie = "";
-                try {
-                    categorie = (new JSONObject(depenses.get(position))).getString("categorie");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                String prix = "";
-                try {
-                    prix = (new JSONObject(depenses.get(position))).getString("prix");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                String description = "";
-                try {
-                    description = (new JSONObject(depenses.get(position))).getString("description");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                String dateString = date.get(position);
+                String categorieString = categorie.get(position);
+                String prixString = prix.get(position);
+                String descriptionString = description.get(position);
 
                 Bundle args = new Bundle();
-                args.putString("description", description);
-                args.putString("prix", prix);
-                args.putString("categorie", categorie);
-                args.putString("date", date);
+                args.putString("description", descriptionString);
+                args.putString("prix", prixString);
+                args.putString("categorie", categorieString);
+                args.putString("date", dateString);
 
                 FragmentListeDepenses_Item fragmentListeDepenses_Item = new FragmentListeDepenses_Item();
                 fragmentListeDepenses_Item.setArguments(args);
@@ -99,6 +69,86 @@ public class FragmentListeDepenses extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        /*
+        date = new ArrayList<>();
+        prix = new ArrayList<>();
+        categorie = new ArrayList<>();
+        description = new ArrayList<>();
+        resume = new ArrayList<>();
+        populateListView();
+        */
+    }
+
+    private void populateListView(){
+        DatabaseHelper db = ((MainActivity)getActivity()).mDatabaseHelper;
+        Cursor data = db.getData();
+        Calendar calendar = Calendar.getInstance();
+        while(data.moveToNext()){
+            String dateString = data.getString(0);
+            date.add(dateString);
+
+            String prixString = data.getString(1);
+            prix.add(prixString);
+
+            String categorieString = data.getString(2);
+            categorie.add(categorieString);
+
+            description.add(data.getString(3));
+            //image.add(data.getString(4));
+
+            calendar.setTimeInMillis(Long.parseLong(dateString));
+            String mMonth = getMonthFromInt(calendar.get(Calendar.MONTH));
+            int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+            resume.add(mDay + " " + mMonth + " : " + prixString + " $ - ( " + categorieString + " )");
+        }
+    }
+
+    private String getMonthFromInt(int month){
+        String result = "";
+        switch(month){
+            case 0:
+                result = "Janvier";
+                break;
+            case 1:
+                result = "Février";
+                break;
+            case 2:
+                result = "Mars";
+                break;
+            case 3:
+                result = "Avril";
+                break;
+            case 4:
+                result = "Mai";
+                break;
+            case 5:
+                result = "Juin";
+                break;
+            case 6:
+                result = "Juillet";
+                break;
+            case 7:
+                result = "Aout";
+                break;
+            case 8:
+                result = "Septembre";
+                break;
+            case 9:
+                result = "Octobre";
+                break;
+            case 10:
+                result = "Novembre";
+                break;
+            case 11:
+                result = "Décembre";
+                break;
+        }
+        return result;
     }
 
 }
