@@ -1,5 +1,6 @@
 package ca.ulaval.ima.projet_session;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,8 +12,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class FragmentStatistiques extends Fragment {
+
+    private ArrayList<String> prix;
+    private ArrayList<String> categorie;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -21,64 +26,29 @@ public class FragmentStatistiques extends Fragment {
     {
         View view = inflater.inflate(R.layout.fragment_statistiques, container, false);
 
-        final ArrayList<String> depenses = new ArrayList<>();
-        depenses.add("{" +
-                "\"date\":\"12/02\"," +
-                "\"categorie\":\"Essence\"," +
-                "\"prix\":\"100\"" +
-                "}");
-        depenses.add("{" +
-                "\"date\":\"14/02\"," +
-                "\"categorie\":\"Restaurant\"," +
-                "\"prix\":\"70\"" +
-                "}");
-        depenses.add("{" +
-                "\"date\":\"20/07\"," +
-                "\"categorie\":\"Essence\"," +
-                "\"prix\":\"50\"" +
-                "}");
+        prix = new ArrayList<>();
+        categorie = new ArrayList<>();
 
-        ArrayList<String> date = new ArrayList<>();
-        ArrayList<String> categorie = new ArrayList<>();
-        ArrayList<String> prix = new ArrayList<>();
+        populateListView();
 
+        float montantTotalInt = 0;
+        float montantEssenceInt = 0;
+        float montantRestaurantInt = 0;
 
-        for (int i = 0; i < depenses.size(); i++) {
-            try {
-                date.add((new JSONObject(depenses.get(i))).getString("date"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                categorie.add((new JSONObject(depenses.get(i))).getString("categorie"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                prix.add((new JSONObject(depenses.get(i))).getString("prix"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        Integer montantTotalInt = 0;
-        Integer montantEssenceInt = 0;
-        Integer montantRestaurantInt = 0;
-
-        for (int i = 0; i < depenses.size(); i++) {
+        for (int i = 0; i < prix.size(); i++) {
             String cat = categorie.get(i);
             if (cat.equals("Restaurant")){
-                montantRestaurantInt += Integer.parseInt(prix.get(i));
+                montantRestaurantInt += Float.parseFloat(prix.get(i));
             }
             if (cat.equals("Essence")){
-                montantEssenceInt += Integer.parseInt(prix.get(i));
+                montantEssenceInt += Float.parseFloat(prix.get(i));
             }
-            montantTotalInt += Integer.parseInt(prix.get(i));
+            montantTotalInt += Float.parseFloat(prix.get(i));
         }
 
-        String montantTotal = montantTotalInt.toString();
-        String montantEssence = montantEssenceInt.toString();
-        String montantRestaurant = montantRestaurantInt.toString();
+        String montantTotal = Float.toString(montantTotalInt);
+        String montantEssence = Float.toString(montantEssenceInt);
+        String montantRestaurant = Float.toString(montantRestaurantInt);
 
         TextView textView_statistiques_montant_total = (TextView)view.findViewById(R.id.textView_statistiques_montant_total);
         textView_statistiques_montant_total.setText(montantTotal + " $");
@@ -90,6 +60,18 @@ public class FragmentStatistiques extends Fragment {
         textView_statistiques_montant_restaurant.setText(montantRestaurant + " $");
 
         return view;
+    }
+
+    private void populateListView(){
+        DatabaseHelper db = ((MainActivity)getActivity()).mDatabaseHelper;
+        Cursor data = db.getData();
+        while(data.moveToNext()){
+            String prixString = data.getString(1);
+            prix.add(prixString);
+
+            String categorieString = data.getString(2);
+            categorie.add(categorieString);
+        }
     }
 
 }
