@@ -11,7 +11,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat.Builder;
 import android.util.Log;
 import android.location.Criteria;
 import android.location.Location;
@@ -38,14 +38,27 @@ public class ServiceGPS extends Service
     private final Messenger toServiceMessenger = new Messenger(new ServiceHandler());
     private LocationManager locationManager = null;
     private LocationListener locationListener = new LocationListener();
+    private float distanceTraveled = 150f;
+    private Builder notificationBuilder = null;
 
     @Override
     public void onCreate()
     {
         super.onCreate();
+
+        //Création et affichage de la notification
+        notificationBuilder = new Builder(this)
+            .setSmallIcon(R.drawable.icon_gps_tracking)
+            .setContentTitle("Distance parcourue")
+            .setContentText(String.format("%.3f", distanceTraveled/1000) + " km")
+            .setOngoing(true);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setAction("android.intent.action.MAIN").addCategory("android.intent.category.LAUNCHER");
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        notificationBuilder.setContentIntent(contentIntent);
         showNotification();
-        timer.scheduleAtFixedRate(new TimerTask(){ public void run() {onTimerTick();}}, 0, 100L);
-        isRunning = true;
+
+        //Enregistrement aux changements de localisation
         locationManager = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         try
         {
@@ -60,6 +73,10 @@ public class ServiceGPS extends Service
         {
             Exception exception = e;
         }
+
+        timer.scheduleAtFixedRate(new TimerTask(){ public void run() {onTimerTick();}}, 0, 100L);
+        isRunning = true;
+
     }
 
     @Override
@@ -130,63 +147,10 @@ public class ServiceGPS extends Service
         }
     }
 
-    private class LocationListener implements android.location.LocationListener
-    {
-        Location lastLocation = null;
-        float distanceTraveled = 0;
-
-        public void initialize()
-        {
-            sendMessageToUI2(distanceTraveled);
-        }
-
-        @Override
-        public void onLocationChanged(Location location)
-        {
-            if (lastLocation != null)
-            {
-                distanceTraveled += lastLocation.distanceTo(location);
-                sendMessageToUI2(distanceTraveled);
-            }
-            else
-            {
-                distanceTraveled += 1;
-                sendMessageToUI2(distanceTraveled);
-            }
-            lastLocation = location;
-        }
-
-        @Override
-        public void onProviderDisabled(String provider)
-        {
-        }
-
-        @Override
-        public void onProviderEnabled(String provider)
-        {
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras)
-        {
-        }
-    }
-
     private void showNotification()
     {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-            .setSmallIcon(R.drawable.icon_gps_tracking)
-            .setContentTitle("My Notification Title")
-            .setContentText("Something interesting happened")
-            .setOngoing(true);
-
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setAction("android.intent.action.MAIN").addCategory("android.intent.category.LAUNCHER");
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        builder.setContentIntent(contentIntent);
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
+        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
 
     private void onTimerTick()
@@ -200,6 +164,34 @@ public class ServiceGPS extends Service
         catch (Throwable t) { Log.e("TimerTick", "Timer Tick Failed.", t); }
     }
 
+    private class LocationListener implements android.location.LocationListener
+    {
+        Location lastLocation = null;
+
+        @Override
+        public void onLocationChanged(Location location)
+        {
+            if (lastLocation != null) { distanceTraveled += lastLocation.distanceTo(location); }
+            sendMessageToUI2(distanceTraveled);
+            lastLocation = location;
+
+            notificationBuilder.setContentText(String.format("%.3f", distanceTraveled/1000) + " km");
+            showNotification();
+        }
+
+        @Override
+        public void onProviderDisabled(String provider)
+        {}
+
+        @Override
+        public void onProviderEnabled(String provider)
+        {}
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras)
+        {}
+    }
+
     private class ServiceHandler extends Handler
     {
         @Override
@@ -209,7 +201,7 @@ public class ServiceGPS extends Service
             {
                 case MSG_REGISTER_CLIENT:
                     messengers.add(message.replyTo);
-                    locationListener.initialize();
+                    sendMessageToUI2(distanceTraveled);
                     break;
                 case MSG_UNREGISTER_CLIENT:
                     messengers.remove(message.replyTo);
