@@ -1,9 +1,9 @@
 package ca.ulaval.ima.projet_session;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -18,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.app.Activity;
 
 public class FragmentGPS_Before_Start extends Fragment
 {
@@ -28,52 +27,7 @@ public class FragmentGPS_Before_Start extends Fragment
     boolean isBound;
     final Messenger toFragmentMessenger = new Messenger(new FragmentHandler());
 
-    private class FragmentHandler extends Handler
-    {
-        @Override
-        public void handleMessage(Message message)
-        {
-            switch (message.what)
-            {
-                case ServiceGPS.MSG_SET_INT_VALUE:
-                    textIntValue.setText("Int Message: " + message.arg1);
-                    break;
-                case ServiceGPS.MSG_SET_STRING_VALUE:
-                    String str1 = message.getData().getString("str1");
-                    textStrValue.setText("Str Message: " + str1);
-                    break;
-                case ServiceGPS.MSG_SET_DISTANCE_VALUE:
-                    float distance = message.getData().getFloat("distance");
-                    textDistanceValue.setText(Float.toString(distance));
-                    break;
-                default:
-                    super.handleMessage(message);
-            }
-        }
-    }
-
-    private ServiceConnection serviceConnection = new ServiceConnection()
-    {
-        public void onServiceConnected(ComponentName className, IBinder serviceIBinder)
-        {
-            toServiceMessenger = new Messenger(serviceIBinder);
-            textStatus.setText("Attached.");
-            try
-            {
-                Message message = Message.obtain(null, ServiceGPS.MSG_REGISTER_CLIENT);
-                message.replyTo = toFragmentMessenger;
-                toServiceMessenger.send(message);
-            }
-            catch (RemoteException e) {}
-        }
-
-        //Unexpected disconnection
-        public void onServiceDisconnected(ComponentName className)
-        {
-            toServiceMessenger = null;
-            textStatus.setText("Disconnected.");
-        }
-    };
+    private ServiceConnection serviceConnection = new ServiceConnection();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -93,9 +47,23 @@ public class FragmentGPS_Before_Start extends Fragment
 
         restoreMe(savedInstanceState);
 
-        if (ServiceGPS.isRunning()) { doBindService(); }
+        if (ServiceGPS.isRunning()) { bindGPSService(); }
 
         return view;
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        try
+        {
+            unbindGPSService();
+        }
+        catch (Throwable t)
+        {
+            Log.e("MainActivity", "Failed to unbind from the service", t);
+        }
     }
 
     private void restoreMe(Bundle state)
@@ -105,28 +73,6 @@ public class FragmentGPS_Before_Start extends Fragment
             textStatus.setText(state.getString("textStatus"));
             textIntValue.setText(state.getString("textIntValue"));
             textStrValue.setText(state.getString("textStrValue"));
-        }
-    }
-
-    private class onClickBtnStart implements OnClickListener
-    {
-        @Override
-        public void onClick(View v)
-        {
-            Activity activity = FragmentGPS_Before_Start.this.getActivity();
-            activity.startService(new Intent(activity, ServiceGPS.class));
-            doBindService();
-        }
-    }
-
-    private class onClickBtnStop implements OnClickListener
-    {
-        @Override
-        public void onClick(View v)
-        {
-            doUnbindService();
-            Activity activity = FragmentGPS_Before_Start.this.getActivity();
-            activity.stopService(new Intent(activity, ServiceGPS.class));
         }
     }
 
@@ -162,7 +108,7 @@ public class FragmentGPS_Before_Start extends Fragment
         }
     }
 
-    void doBindService()
+    private void bindGPSService()
     {
         Activity activity = FragmentGPS_Before_Start.this.getActivity();
         activity.bindService(new Intent(activity, ServiceGPS.class), serviceConnection, Context.BIND_AUTO_CREATE);
@@ -170,7 +116,7 @@ public class FragmentGPS_Before_Start extends Fragment
         textStatus.setText("Binding.");
     }
 
-    void doUnbindService()
+    private void unbindGPSService()
     {
         if (isBound)
         {
@@ -190,17 +136,72 @@ public class FragmentGPS_Before_Start extends Fragment
         }
     }
 
-    @Override
-    public void onDestroy()
+    private class onClickBtnStart implements OnClickListener
     {
-        super.onDestroy();
-        try
+        @Override
+        public void onClick(View v)
         {
-            doUnbindService();
+            Activity activity = FragmentGPS_Before_Start.this.getActivity();
+            activity.startService(new Intent(activity, ServiceGPS.class));
+            bindGPSService();
         }
-        catch (Throwable t)
+    }
+
+    private class onClickBtnStop implements OnClickListener
+    {
+        @Override
+        public void onClick(View v)
         {
-            Log.e("MainActivity", "Failed to unbind from the service", t);
+            unbindGPSService();
+            Activity activity = FragmentGPS_Before_Start.this.getActivity();
+            activity.stopService(new Intent(activity, ServiceGPS.class));
+        }
+    }
+
+    private class FragmentHandler extends Handler
+    {
+        @Override
+        public void handleMessage(Message message)
+        {
+            switch (message.what)
+            {
+                case ServiceGPS.MSG_SET_INT_VALUE:
+                    textIntValue.setText("Int Message: " + message.arg1);
+                    break;
+                case ServiceGPS.MSG_SET_STRING_VALUE:
+                    String str1 = message.getData().getString("str1");
+                    textStrValue.setText("Str Message: " + str1);
+                    break;
+                case ServiceGPS.MSG_SET_DISTANCE_VALUE:
+                    float distance = message.getData().getFloat("distance");
+                    textDistanceValue.setText(Float.toString(distance));
+                    break;
+                default:
+                    super.handleMessage(message);
+            }
+        }
+    }
+
+    private class ServiceConnection implements android.content.ServiceConnection
+    {
+        public void onServiceConnected(ComponentName className, IBinder serviceIBinder)
+        {
+            toServiceMessenger = new Messenger(serviceIBinder);
+            textStatus.setText("Attached.");
+            try
+            {
+                Message message = Message.obtain(null, ServiceGPS.MSG_REGISTER_CLIENT);
+                message.replyTo = toFragmentMessenger;
+                toServiceMessenger.send(message);
+            }
+            catch (RemoteException e) {}
+        }
+
+        //Unexpected disconnection
+        public void onServiceDisconnected(ComponentName className)
+        {
+            toServiceMessenger = null;
+            textStatus.setText("Disconnected.");
         }
     }
 }
