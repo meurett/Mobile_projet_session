@@ -1,5 +1,7 @@
 package ca.ulaval.ima.projet_session;
 
+import android.support.design.widget.FloatingActionButton;
+
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,6 +23,12 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private ArrayList<Depense> depenses = new ArrayList<>();
+
+    public FloatingActionButton getFloatingActionButton() {
+        return floatingActionButton;
+    }
+
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,6 +46,19 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new FragmentAjoutDepense();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.root_liste_depenses, fragment, fragment.getClass().getSimpleName())
+                        .addToBackStack(null)
+                        .commit();
+                floatingActionButton.hide();
+            }
+        });
     }
 
     @Override
@@ -75,22 +97,20 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
             while (getSupportFragmentManager().getBackStackEntryCount() > 0){
                 getSupportFragmentManager().popBackStackImmediate();
             }
+            floatingActionButton.hide();
             switch (position){
                 case 0:
                     RootGPS rootGPS = new RootGPS();
                     return rootGPS;
                 case 1:
-                    RootListeDepenses rootListeDepenses = new RootListeDepenses();
-                    return rootListeDepenses;
-                case 2:
-                    RootAjoutDepense rootAjoutDepense = new RootAjoutDepense();
-                    return rootAjoutDepense;
-                case 3:
-                    RootStatistiques rootStatistiques = new RootStatistiques();
-                    return rootStatistiques;
-                case 4:
                     RootGDrive rootGDrive = new RootGDrive();
                     return rootGDrive;
+                case 2:
+                    RootStatistiques rootStatistiques = new RootStatistiques();
+                    return rootStatistiques;
+                case 3:
+                    RootListeDepenses rootListeDepenses = new RootListeDepenses();
+                    return rootListeDepenses;
                 default:
                     return null;
             }
@@ -99,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
         @Override
         public int getCount()
         {
-            return 5;
+            return 4;
         }
 
         @Override
@@ -110,13 +130,11 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
                 case 0:
                     return "GPS";
                 case 1:
-                    return "Liste des dépenses";
-                case 2:
-                    return "Ajouter dépense";
-                case 3:
-                    return "Statistiques";
-                case 4:
                     return "GDrive";
+                case 2:
+                    return "Statistiques";
+                case 3:
+                    return "Dépenses";
             }
             return null;
         }

@@ -122,4 +122,10 @@ public class FragmentListeDepenses_Item extends Fragment {
         }
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((MainActivity) getActivity()).getFloatingActionButton().hide();
+    }
 }

@@ -1,6 +1,5 @@
 package ca.ulaval.ima.projet_session;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;

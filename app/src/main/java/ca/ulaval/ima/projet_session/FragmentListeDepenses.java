@@ -21,6 +21,7 @@ public class FragmentListeDepenses extends Fragment {
     private ArrayList<String> categorie;
     private ArrayList<String> description;
     private ArrayList<String> resume;
+    private View mView;
 
 
     @Override
@@ -28,7 +29,7 @@ public class FragmentListeDepenses extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_liste_depenses, container, false);
+        mView = inflater.inflate(R.layout.fragment_liste_depenses, container, false);
 
         date = new ArrayList<>();
         prix = new ArrayList<>();
@@ -38,7 +39,7 @@ public class FragmentListeDepenses extends Fragment {
 
         populateListView();
 
-        myList = (ListView) view.findViewById(R.id.liste_depenses);
+        myList = (ListView) mView.findViewById(R.id.liste_depenses);
         myList.setAdapter(new Adapter_Fragment_ListeDepense(getActivity(), resume));
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -68,21 +69,7 @@ public class FragmentListeDepenses extends Fragment {
             }
         });
 
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        /*
-        date = new ArrayList<>();
-        prix = new ArrayList<>();
-        categorie = new ArrayList<>();
-        description = new ArrayList<>();
-        resume = new ArrayList<>();
-
-        populateListView();
-        */
+        return mView;
     }
 
     private void populateListView(){
@@ -152,4 +139,10 @@ public class FragmentListeDepenses extends Fragment {
         return result;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((MainActivity) getActivity()).getFloatingActionButton().show();
+    }
 }
