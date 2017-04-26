@@ -104,7 +104,8 @@ public class FragmentListeDepenses extends Fragment {
             calendar.setTimeInMillis(Long.parseLong(dateString));
             String mMonth = getMonthFromInt(calendar.get(Calendar.MONTH));
             int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-            resume.add(mDay + " " + mMonth + " : " + prixString + " $ - ( " + categorieString + " )");
+            int mYear = calendar.get(Calendar.YEAR);
+            resume.add(mDay + " " + mMonth + " (" + mYear + ") " + " : " + prixString + " $ - ( " + categorieString + " )");
         }
     }
 
