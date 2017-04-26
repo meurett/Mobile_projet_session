@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -11,41 +13,36 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Calendar;
 
 public class FragmentGPS_Before_Start extends Fragment
 {
-    Button btnUpby1, btnUpby10;
-    TextView textStatus, textIntValue, textStrValue, textDistanceValue;
-    Messenger toServiceMessenger = null;
-    boolean isBound;
-    final Messenger toFragmentMessenger = new Messenger(new FragmentHandler());
-
-    private ServiceConnection serviceConnection = new ServiceConnection();
+    private final Messenger toFragmentMessenger = new Messenger(new FragmentHandler());
+    private final ServiceConnection serviceConnection = new ServiceConnection();
+    private Button buttonToggleTracking, buttonSave, buttonReset;
+    private TextView textDistanceValue;
+    private Messenger toServiceMessenger = null;
+    private float distanceTraveled = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_gps_before_start, container, false);
-        ((Button)view.findViewById(R.id.btnStart)).setOnClickListener(new onClickBtnStart());
-        ((Button)view.findViewById(R.id.btnStop)).setOnClickListener(new onClickBtnStop());
-        textStatus = (TextView)view.findViewById(R.id.textStatus);
-        textIntValue = (TextView)view.findViewById(R.id.textIntValue);
-        textStrValue = (TextView)view.findViewById(R.id.textStrValue);
-        textDistanceValue = (TextView)view.findViewById(R.id.textDistance);
-        btnUpby1 = (Button)view.findViewById(R.id.btnUpby1);
-        btnUpby10 = (Button)view.findViewById(R.id.btnUpby10);
-
-        btnUpby1.setOnClickListener(btnUpby1Listener);
-        btnUpby10.setOnClickListener(btnUpby10Listener);
-
-        restoreMe(savedInstanceState);
+        buttonToggleTracking = (Button)view.findViewById(R.id.buttonToggleTracking);
+        buttonToggleTracking.setOnClickListener(new onClickButtonToggleTracking());
+        buttonReset = (Button)view.findViewById(R.id.buttonReset);
+        buttonReset.setOnClickListener(new onClickButtonReset());
+        buttonSave = (Button)view.findViewById(R.id.buttonSave);
+        buttonSave.setOnClickListener(new onClickButtonSave());
+        textDistanceValue = (TextView)view.findViewById(R.id.textViewDistance);
 
         if (ServiceGPS.isRunning()) { bindGPSService(); }
 
@@ -61,100 +58,87 @@ public class FragmentGPS_Before_Start extends Fragment
             unbindGPSService();
         }
         catch (Throwable t)
-        {
-            Log.e("MainActivity", "Failed to unbind from the service", t);
-        }
-    }
-
-    private void restoreMe(Bundle state)
-    {
-        if (state!=null)
-        {
-            textStatus.setText(state.getString("textStatus"));
-            textIntValue.setText(state.getString("textIntValue"));
-            textStrValue.setText(state.getString("textStrValue"));
-        }
-    }
-
-    private OnClickListener btnUpby1Listener = new OnClickListener()
-    {
-        public void onClick(View v)
-        {
-            sendMessageToService(1);
-        }
-    };
-
-    private OnClickListener btnUpby10Listener = new OnClickListener()
-    {
-        public void onClick(View v){
-            sendMessageToService(10);
-        }
-    };
-
-    private void sendMessageToService(int intvaluetosend)
-    {
-        if (isBound)
-        {
-            if (toServiceMessenger != null)
-            {
-                try
-                {
-                    Message msg = Message.obtain(null, ServiceGPS.MSG_SET_INT_VALUE, intvaluetosend, 0);
-                    msg.replyTo = toFragmentMessenger;
-                    toServiceMessenger.send(msg);
-                }
-                catch (RemoteException e) {}
-            }
-        }
+        {}
     }
 
     private void bindGPSService()
     {
         Activity activity = FragmentGPS_Before_Start.this.getActivity();
+        activity.startService(new Intent(activity, ServiceGPS.class));
         activity.bindService(new Intent(activity, ServiceGPS.class), serviceConnection, Context.BIND_AUTO_CREATE);
-        isBound = true;
-        textStatus.setText("Binding.");
+        buttonToggleTracking.setText("Arrêter");
+        buttonReset.setEnabled(false);
+        buttonSave.setEnabled(false);
     }
 
     private void unbindGPSService()
     {
-        if (isBound)
+        if (toServiceMessenger != null)
         {
-            if (toServiceMessenger != null)
+            try
             {
-                try
-                {
-                    Message message = Message.obtain(null, ServiceGPS.MSG_UNREGISTER_CLIENT);
-                    message.replyTo = toFragmentMessenger;
-                    toServiceMessenger.send(message);
-                }
-                catch (RemoteException e) {}
+                Message message = Message.obtain(null, ServiceGPS.MSG_UNREGISTER_CLIENT);
+                message.replyTo = toFragmentMessenger;
+                toServiceMessenger.send(message);
             }
-            FragmentGPS_Before_Start.this.getActivity().unbindService(serviceConnection);
-            isBound = false;
-            textStatus.setText("Unbinding.");
+            catch (RemoteException e) {}
+        }
+        FragmentGPS_Before_Start.this.getActivity().unbindService(serviceConnection);
+        buttonToggleTracking.setText(distanceTraveled == 0 ? "Démarrer" : "Continuer");
+        if (distanceTraveled != 0)
+        {
+            buttonReset.setEnabled(true);
+            buttonSave.setEnabled(true);
         }
     }
 
-    private class onClickBtnStart implements OnClickListener
+    private class onClickButtonToggleTracking implements OnClickListener
     {
         @Override
-        public void onClick(View v)
+        public void onClick(View view)
         {
-            Activity activity = FragmentGPS_Before_Start.this.getActivity();
-            activity.startService(new Intent(activity, ServiceGPS.class));
-            bindGPSService();
+            if (ServiceGPS.isRunning())
+            {
+                unbindGPSService();
+                Activity activity = FragmentGPS_Before_Start.this.getActivity();
+                activity.stopService(new Intent(activity, ServiceGPS.class));
+
+            }
+            else
+            {
+                bindGPSService();
+            }
         }
     }
 
-    private class onClickBtnStop implements OnClickListener
+    private class onClickButtonReset implements OnClickListener
     {
         @Override
-        public void onClick(View v)
+        public void onClick(View view)
         {
-            unbindGPSService();
-            Activity activity = FragmentGPS_Before_Start.this.getActivity();
-            activity.stopService(new Intent(activity, ServiceGPS.class));
+            distanceTraveled = 0;
+            textDistanceValue.setText("Distance parcourue : " + String.format("%.3f", distanceTraveled/1000) + " km");
+        }
+    }
+
+    private class onClickButtonSave implements OnClickListener
+    {
+        @Override
+        public void onClick(View view)
+        {
+            Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.icon_no_image)).getBitmap();
+            String prix = String.format("%.2f", distanceTraveled / 1000 * 1.25);
+            String description = "";
+            String categorie = "Essence";
+            Calendar c = Calendar.getInstance();
+            String date = "" + c.getTimeInMillis();
+            DatabaseHelper databaseHelper = ((MainActivity)getActivity()).mDatabaseHelper;
+            boolean insertData = databaseHelper.addData(date, categorie, prix, description, BitmapHelper.getBytes(bitmap));
+            if (insertData){
+                Toast.makeText(getActivity(), "Insertion avec succès !", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "ERREUR ! :(", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -165,16 +149,9 @@ public class FragmentGPS_Before_Start extends Fragment
         {
             switch (message.what)
             {
-                case ServiceGPS.MSG_SET_INT_VALUE:
-                    textIntValue.setText("Int Message: " + message.arg1);
-                    break;
-                case ServiceGPS.MSG_SET_STRING_VALUE:
-                    String str1 = message.getData().getString("str1");
-                    textStrValue.setText("Str Message: " + str1);
-                    break;
-                case ServiceGPS.MSG_SET_DISTANCE_VALUE:
-                    float distance = message.getData().getFloat("distance");
-                    textDistanceValue.setText(Float.toString(distance));
+                case ServiceGPS.MSG_DISTANCE_VALUE:
+                    distanceTraveled = message.getData().getFloat("distance");
+                    textDistanceValue.setText("Distance parcourue : " + String.format("%.3f", distanceTraveled/1000) + " km");
                     break;
                 default:
                     super.handleMessage(message);
@@ -187,7 +164,6 @@ public class FragmentGPS_Before_Start extends Fragment
         public void onServiceConnected(ComponentName className, IBinder serviceIBinder)
         {
             toServiceMessenger = new Messenger(serviceIBinder);
-            textStatus.setText("Attached.");
             try
             {
                 Message message = Message.obtain(null, ServiceGPS.MSG_REGISTER_CLIENT);
@@ -197,11 +173,10 @@ public class FragmentGPS_Before_Start extends Fragment
             catch (RemoteException e) {}
         }
 
-        //Unexpected disconnection
+        //Déconnexion inattendue
         public void onServiceDisconnected(ComponentName className)
         {
             toServiceMessenger = null;
-            textStatus.setText("Disconnected.");
         }
     }
 }

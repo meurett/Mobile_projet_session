@@ -1,84 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <RelativeLayout
-        android:id="@+id/RelativeLayout01"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start Service" >
-        </Button>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="0.5">
+            <TextView
+                android:id="@+id/textViewDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="Distance parcourue : 0 km"
+                android:textSize="24sp"/>
+        </RelativeLayout>
 
-        <Button
-            android:id="@+id/btnStop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Stop Service" >
-        </Button>
-    </RelativeLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="0.5">
+            <TextView
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="right"
+                android:text="$ / km : "
+                android:textSize="24sp"/>
+            <EditText
+                android:id="@+id/kilometerCost"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Test"
+                android:focusable="false"/>
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/textStatus"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Status Goes Here"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/textIntValue"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Integer Value Goes Here"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/textStrValue"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="String Value Goes Here"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/textDistance"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Distance Value Goes Here"
-        android:textSize="24sp" />
-
-    <RelativeLayout
-        android:id="@+id/RelativeLayout03"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/btnUpby1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Increment by 1" >
-        </Button>
-
-        <Button
-            android:id="@+id/btnUpby10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Increment by 10" >
-        </Button>
-    </RelativeLayout>
-</LinearLayout>
-
-<!--<Button-->
-<!--android:text="Start GPS recording"-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:id="@+id/button_start_GPS"-->
-<!--tools:text="Start GPS recording"-->
-<!--android:layout_centerVertical="true"-->
-<!--android:layout_centerHorizontal="true" />-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1">
+            <Button
+                android:id="@+id/buttonToggleTracking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Démarrer">
+            </Button>
+            <Button
+                android:id="@+id/buttonReset"
+                android:layout_below="@id/buttonToggleTracking"
+                android:enabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Remise à zéro">
+            </Button>
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_below="@id/buttonReset"
+                android:enabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enregistrer">
+            </Button>
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

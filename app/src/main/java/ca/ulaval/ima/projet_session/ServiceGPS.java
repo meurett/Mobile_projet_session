@@ -17,29 +17,22 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ServiceGPS extends Service
 {
     static final int MSG_REGISTER_CLIENT = 1;
     static final int MSG_UNREGISTER_CLIENT = 2;
-    static final int MSG_SET_INT_VALUE = 3;
-    static final int MSG_SET_STRING_VALUE = 4;
-    static final int MSG_SET_DISTANCE_VALUE = 5;
+    static final int MSG_DISTANCE_VALUE = 5;
     static final int NOTIFICATION_ID = 1;
     static final int UPDATE_DISTANCE = 0;
 
-    private Timer timer = new Timer();
-    private int counter = 0, incrementby = 1;
     private static boolean isRunning = false;
-    private ArrayList<Messenger> messengers = new ArrayList<>();
     private final Messenger toServiceMessenger = new Messenger(new ServiceHandler());
+    private final LocationListener locationListener = new LocationListener();
+    private final ArrayList<Messenger> messengers = new ArrayList<>();
     private LocationManager locationManager = null;
-    private LocationListener locationListener = new LocationListener();
-    private float distanceTraveled = 150f;
     private Builder notificationBuilder = null;
+    private float distanceTraveled = 150;
 
     @Override
     public void onCreate()
@@ -62,11 +55,10 @@ public class ServiceGPS extends Service
         locationManager = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         try
         {
-            List<String> test = locationManager.getAllProviders();
             Criteria criteria = new Criteria();
             criteria.setAccuracy(Criteria.ACCURACY_FINE);
             String provider = locationManager.getBestProvider(criteria, true);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, UPDATE_DISTANCE, locationListener);
+            locationManager.requestLocationUpdates(provider, 0, UPDATE_DISTANCE, locationListener);
         }
         catch (java.lang.SecurityException e) {}
         catch (IllegalArgumentException e)
@@ -74,9 +66,7 @@ public class ServiceGPS extends Service
             Exception exception = e;
         }
 
-        timer.scheduleAtFixedRate(new TimerTask(){ public void run() {onTimerTick();}}, 0, 100L);
         isRunning = true;
-
     }
 
     @Override
@@ -95,8 +85,6 @@ public class ServiceGPS extends Service
     public void onDestroy()
     {
         super.onDestroy();
-        if (timer != null) {timer.cancel();}
-        counter=0;
         ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE)).cancel(NOTIFICATION_ID);
         isRunning = false;
     }
@@ -106,28 +94,7 @@ public class ServiceGPS extends Service
         return isRunning;
     }
 
-    private void sendMessageToUI(int intvaluetosend)
-    {
-        //Reverse order to allow removal while iterating
-        for (int i = messengers.size() - 1; i >= 0; i--)
-        {
-            try
-            {
-                messengers.get(i).send(Message.obtain(null, MSG_SET_INT_VALUE, intvaluetosend, 0));
-                Bundle bundle = new Bundle();
-                bundle.putString("str1", "ab" + intvaluetosend + "cd");
-                Message message = Message.obtain(null, MSG_SET_STRING_VALUE);
-                message.setData(bundle);
-                messengers.get(i).send(message);
-            }
-            catch (RemoteException e)
-            {
-                messengers.remove(i);
-            }
-        }
-    }
-
-    private void sendMessageToUI2(float distance)
+    private void sendMessageToUI(float distance)
     {
         //Reverse order to allow removal while iterating
         for (int i = messengers.size() - 1; i >= 0; i--)
@@ -136,7 +103,7 @@ public class ServiceGPS extends Service
             {
                 Bundle bundle = new Bundle();
                 bundle.putFloat("distance", distance);
-                Message message = Message.obtain(null, MSG_SET_DISTANCE_VALUE);
+                Message message = Message.obtain(null, MSG_DISTANCE_VALUE);
                 message.setData(bundle);
                 messengers.get(i).send(message);
             }
@@ -153,17 +120,6 @@ public class ServiceGPS extends Service
         notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
 
-    private void onTimerTick()
-    {
-        try
-        {
-            counter += incrementby;
-            sendMessageToUI(counter);
-
-        }
-        catch (Throwable t) { Log.e("TimerTick", "Timer Tick Failed.", t); }
-    }
-
     private class LocationListener implements android.location.LocationListener
     {
         Location lastLocation = null;
@@ -172,7 +128,7 @@ public class ServiceGPS extends Service
         public void onLocationChanged(Location location)
         {
             if (lastLocation != null) { distanceTraveled += lastLocation.distanceTo(location); }
-            sendMessageToUI2(distanceTraveled);
+            sendMessageToUI(distanceTraveled);
             lastLocation = location;
 
             notificationBuilder.setContentText(String.format("%.3f", distanceTraveled/1000) + " km");
@@ -201,13 +157,10 @@ public class ServiceGPS extends Service
             {
                 case MSG_REGISTER_CLIENT:
                     messengers.add(message.replyTo);
-                    sendMessageToUI2(distanceTraveled);
+                    sendMessageToUI(distanceTraveled);
                     break;
                 case MSG_UNREGISTER_CLIENT:
                     messengers.remove(message.replyTo);
-                    break;
-                case MSG_SET_INT_VALUE:
-                    incrementby = message.arg1;
                     break;
                 default:
                     super.handleMessage(message);
