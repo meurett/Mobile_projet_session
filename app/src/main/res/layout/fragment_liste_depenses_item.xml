@@ -12,6 +12,15 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/delete_item_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginTop="350dp"
+            android:layout_marginLeft="300dp"
+            app:srcCompat="@drawable/ic_action_name" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

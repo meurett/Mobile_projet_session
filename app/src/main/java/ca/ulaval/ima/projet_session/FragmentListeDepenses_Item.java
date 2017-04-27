@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ public class FragmentListeDepenses_Item extends Fragment {
     Button buttonEditImage;
     ImageView imageViewImage;
     Bitmap bitmap;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -108,6 +110,15 @@ public class FragmentListeDepenses_Item extends Fragment {
                     }
                 }
         );
+
+        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.delete_item_button);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                (((MainActivity)getActivity()).mDatabaseHelper).deleteDepense(date);
+                getFragmentManager().popBackStack();
+            }
+        });
 
         return view;
     }

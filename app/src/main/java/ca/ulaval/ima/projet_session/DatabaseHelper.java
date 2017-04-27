@@ -176,4 +176,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return result;
     }
+
+    public void deleteDepense(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME +
+                " WHERE " + COL_0 + " = '" + date + "';";
+        db.execSQL(query);
+    }
 }
