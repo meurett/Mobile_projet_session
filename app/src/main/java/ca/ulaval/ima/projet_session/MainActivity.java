@@ -24,12 +24,6 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
     private ViewPager mViewPager;
     private ArrayList<Depense> depenses = new ArrayList<>();
 
-    public FloatingActionButton getFloatingActionButton() {
-        return floatingActionButton;
-    }
-
-    private FloatingActionButton floatingActionButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -46,19 +40,6 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment fragment = new FragmentAjoutDepense();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.root_liste_depenses, fragment, fragment.getClass().getSimpleName())
-                        .addToBackStack(null)
-                        .commit();
-                floatingActionButton.hide();
-            }
-        });
     }
 
     @Override
@@ -97,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
             while (getSupportFragmentManager().getBackStackEntryCount() > 0){
                 getSupportFragmentManager().popBackStackImmediate();
             }
-            floatingActionButton.hide();
             switch (position){
                 case 0:
                     RootGPS rootGPS = new RootGPS();

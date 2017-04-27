@@ -2,6 +2,7 @@ package ca.ulaval.ima.projet_session;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import java.util.Calendar;
 public class FragmentListeDepenses extends Fragment {
 
     private ListView myList;
+    private FloatingActionButton floatingActionButton;
     private ArrayList<String> date;
     private ArrayList<String> prix;
     private ArrayList<String> categorie;
@@ -30,6 +32,19 @@ public class FragmentListeDepenses extends Fragment {
                              Bundle savedInstanceState)
     {
         mView = inflater.inflate(R.layout.fragment_liste_depenses, container, false);
+
+        floatingActionButton = (FloatingActionButton) mView.findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new FragmentAjoutDepense();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.root_liste_depenses, fragment, fragment.getClass().getSimpleName())
+                        .addToBackStack(null)
+                        .commit();
+                floatingActionButton.hide();
+            }
+        });
 
         date = new ArrayList<>();
         prix = new ArrayList<>();
@@ -143,6 +158,6 @@ public class FragmentListeDepenses extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        ((MainActivity) getActivity()).getFloatingActionButton().show();
+        floatingActionButton.show();
     }
 }
