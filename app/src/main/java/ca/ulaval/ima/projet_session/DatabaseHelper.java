@@ -12,7 +12,9 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -62,6 +64,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return (result != -1);
     }
 
+    public boolean addDataWithoutImage(String date, String categorie, String prix, String description) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COL_0, date);
+        contentValues.put(COL_1, prix);
+        contentValues.put(COL_2, categorie);
+        contentValues.put(COL_3, description);
+        contentValues.putNull(COL_4);
+
+        long result = db.insert(TABLE_NAME, null, contentValues);
+
+        return (result != -1);
+    }
+
     public Cursor getData() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
@@ -83,13 +100,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, contentValues, COL_0+"= ?", new String[]{date});
     }
 
+    public void updateDepenseWithoutImage(String date, String prix, String description, String categorie) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COL_0, date);
+        contentValues.put(COL_1, prix);
+        contentValues.put(COL_2, categorie);
+        if (!(description.equals(""))) {
+            contentValues.put(COL_3, description);
+        }
+        contentValues.putNull(COL_4);
+
+        db.update(TABLE_NAME, contentValues, COL_0+"= ?", new String[]{date});
+    }
+
     public Bitmap getImage(String date) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT image FROM " + TABLE_NAME +
                 " WHERE " + COL_0 + " = '" + date + "';";
         Cursor data = db.rawQuery(query, null);
         data.moveToNext();
-        return BitmapHelper.getBitmap(data.getBlob(0));
+        if (!(data.getBlob(0) == null)){
+            return BitmapHelper.getBitmap(data.getBlob(0));
+        } else {
+            return null;
+        }
     }
 
     public String exportDB(Activity a) {
@@ -100,37 +136,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             exportDir.mkdirs();
         }
 
-        s += "-1-";
         File file = new File(exportDir, "depenses.csv");
 
         try {
-            s += "-PRE-";
             file.createNewFile();
-            s += "-2-";
             CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
             SQLiteDatabase db = dbhelper.getReadableDatabase();
             Cursor curCSV = db.rawQuery("SELECT " + COL_0 + ", " + COL_1 + ", " + COL_2 + ", " + COL_3 + " FROM " + TABLE_NAME, null);
-            csvWrite.writeNext(curCSV.getColumnNames());
+            String[] columns = curCSV.getColumnNames();
+            String[] columns_extend = new String[columns.length + 1];
+            Integer i = 0;
+            while (i<columns.length){
+                columns_extend[i] = columns[i];
+                i++;
+            }
+            columns_extend[i] = "Date humaine";
+            csvWrite.writeNext(columns_extend);
             while (curCSV.moveToNext()) {
-                //Which column you want to exprort
-                // TODO :
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(Long.parseLong(curCSV.getString(0)));
                 String mMonth = getMonthFromInt(calendar.get(Calendar.MONTH));
                 int mDay = calendar.get(Calendar.DAY_OF_MONTH);
                 int mYear = calendar.get(Calendar.YEAR);
-                String arrStr[] = {"" + mDay + " " + mMonth + " " + mYear, curCSV.getString(1), curCSV.getString(2), curCSV.getString(3)};
+                String arrStr[] = {curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3), mDay + " " + mMonth + " " + mYear};
                 csvWrite.writeNext(arrStr);
             }
             csvWrite.close();
             curCSV.close();
-            s += "-fini-";
-            s += "-C-";
             return file.toString();
         } catch (Exception sqlEx) {
             Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
-            s += "-E-";
-            return s + sqlEx.getMessage();
+            return sqlEx.getMessage();
         }
     }
 

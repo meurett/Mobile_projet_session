@@ -76,7 +76,9 @@ public class FragmentListeDepenses_Item extends Fragment {
         // ==============================
         imageViewImage = (ImageView) view.findViewById(R.id.imageView_photo_liste_depense_item);
         bitmap = (((MainActivity)getActivity()).mDatabaseHelper).getImage(date);
-        imageViewImage.setImageBitmap(bitmap);
+        if (!(bitmap == null)){
+            imageViewImage.setImageBitmap(bitmap);
+        }
 
         buttonEditImage = (Button) view.findViewById(R.id.button_liste_depense_item_ajouter_photo);
         buttonEditImage.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +106,13 @@ public class FragmentListeDepenses_Item extends Fragment {
                           if (prix.equals("")){
                               Toast.makeText(getActivity(), "\"PRIX\" doit être non vide !", Toast.LENGTH_SHORT).show();
                           } else {
-                              (((MainActivity)getActivity()).mDatabaseHelper).updateDepense(date, prix, description, categorie, BitmapHelper.getBytes(bitmap));
+                              if (!(bitmap == null)){
+                                  (((MainActivity)getActivity()).mDatabaseHelper).updateDepense(date, prix, description, categorie, BitmapHelper.getBytes(bitmap));
+
+                              } else {
+                                  (((MainActivity)getActivity()).mDatabaseHelper).updateDepenseWithoutImage(date, prix, description, categorie);
+
+                              }
                               Toast.makeText(getActivity(), "Update succed !", Toast.LENGTH_SHORT).show();
                           }
                     }

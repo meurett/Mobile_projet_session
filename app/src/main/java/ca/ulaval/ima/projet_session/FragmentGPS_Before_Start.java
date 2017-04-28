@@ -126,14 +126,13 @@ public class FragmentGPS_Before_Start extends Fragment
         @Override
         public void onClick(View view)
         {
-            Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.icon_no_image)).getBitmap();
             String prix = String.format("%.2f", distanceTraveled / 1000 * 1.25);
             String description = "";
             String categorie = "Essence";
             Calendar c = Calendar.getInstance();
             String date = "" + c.getTimeInMillis();
             DatabaseHelper databaseHelper = ((MainActivity)getActivity()).mDatabaseHelper;
-            boolean insertData = databaseHelper.addData(date, categorie, prix, description, BitmapHelper.getBytes(bitmap));
+            boolean insertData = databaseHelper.addDataWithoutImage(date, categorie, prix, description);
             if (insertData){
                 Toast.makeText(getActivity(), "Insertion avec succès !", Toast.LENGTH_SHORT).show();
             } else {

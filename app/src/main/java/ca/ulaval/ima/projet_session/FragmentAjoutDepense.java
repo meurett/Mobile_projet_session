@@ -51,10 +51,9 @@ public class FragmentAjoutDepense extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategorie.setAdapter(adapter);
 
-        buttonAddImage = (Button) view.findViewById(R.id.button_ajout_depense_ajouter_photo);
-        bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.icon_no_image)).getBitmap();
         imageViewImage = (ImageView) view.findViewById(R.id.imageView_photo_depense);
-        imageViewImage.setImageBitmap(bitmap);
+
+        buttonAddImage = (Button) view.findViewById(R.id.button_ajout_depense_ajouter_photo);
 
         buttonAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +92,12 @@ public class FragmentAjoutDepense extends Fragment {
                       Toast.makeText(getActivity(), "\"PRIX\" doit être non vide !", Toast.LENGTH_SHORT).show();
                   } else {
                       DatabaseHelper db = ((MainActivity)getActivity()).mDatabaseHelper;
-                      boolean insertData = db.addData(date, categorie, prix, description, BitmapHelper.getBytes(bitmap));
+                      boolean insertData;
+                      if (!(bitmap == null)){
+                          insertData = db.addData(date, categorie, prix, description, BitmapHelper.getBytes(bitmap));
+                      } else {
+                          insertData = db.addDataWithoutImage(date, categorie, prix, description);
+                      }
                       if (insertData){
                           Toast.makeText(getActivity(), "Insertion avec succès !", Toast.LENGTH_SHORT).show();
                       } else {
