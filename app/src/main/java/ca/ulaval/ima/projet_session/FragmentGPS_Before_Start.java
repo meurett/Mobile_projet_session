@@ -30,7 +30,7 @@ public class FragmentGPS_Before_Start extends Fragment
     private final ServiceConnection serviceConnection = new ServiceConnection();
     private Button buttonToggleTracking, buttonSave, buttonReset;
     private TextView textDistanceValue;
-    private EditText kilometerCost;
+    private EditText textEditKilometerCost;
     private Messenger toServiceMessenger = null;
     private float distanceTraveled = 0;
 
@@ -45,7 +45,7 @@ public class FragmentGPS_Before_Start extends Fragment
         buttonSave = (Button)view.findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(new onClickButtonSave());
         textDistanceValue = (TextView)view.findViewById(R.id.textViewDistance);
-        kilometerCost = (EditText)view.findViewById(R.id.kilometerCost);
+        textEditKilometerCost = (EditText)view.findViewById(R.id.textEditKilometerCost);
 
         if (ServiceGPS.isRunning()) { bindGPSService(); }
 
@@ -130,17 +130,21 @@ public class FragmentGPS_Before_Start extends Fragment
         public void onClick(View view)
         {
             Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.icon_no_image)).getBitmap();
-            String prix = String.format("%.2f", distanceTraveled / 1000 * 1.25);
+            float kilometerCost = Float.valueOf(textEditKilometerCost.getText().toString());
+            String prix = String.format("%.2f", distanceTraveled / 1000 * kilometerCost);
             String description = "";
             String categorie = "Essence";
-            Calendar c = Calendar.getInstance();
-            String date = "" + c.getTimeInMillis();
+            Calendar calendar = Calendar.getInstance();
+            String date = "" + calendar.getTimeInMillis();
             DatabaseHelper databaseHelper = ((MainActivity)getActivity()).mDatabaseHelper;
             boolean insertData = databaseHelper.addData(date, categorie, prix, description, BitmapHelper.getBytes(bitmap));
-            if (insertData){
-                Toast.makeText(getActivity(), "Insertion avec succès !", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getActivity(), "ERREUR ! :(", Toast.LENGTH_SHORT).show();
+            if (insertData)
+            {
+                Toast.makeText(getActivity(), "Insertion avec succès", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(getActivity(), "Erreur lors de l'insertion", Toast.LENGTH_SHORT).show();
             }
         }
     }

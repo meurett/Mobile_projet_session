@@ -24,7 +24,7 @@ public class ServiceGPS extends Service
     static final int MSG_UNREGISTER_CLIENT = 2;
     static final int MSG_DISTANCE_VALUE = 5;
     static final int NOTIFICATION_ID = 1;
-    static final int UPDATE_DISTANCE = 0;
+    static final int UPDATE_DISTANCE = 50;
 
     private static boolean isRunning = false;
     private final Messenger toServiceMessenger = new Messenger(new ServiceHandler());
@@ -32,7 +32,7 @@ public class ServiceGPS extends Service
     private final ArrayList<Messenger> messengers = new ArrayList<>();
     private LocationManager locationManager = null;
     private Builder notificationBuilder = null;
-    private float distanceTraveled = 150;
+    private float distanceTraveled = 0;
 
     @Override
     public void onCreate()
