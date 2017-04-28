@@ -19,9 +19,7 @@ public class FragmentStatistiques extends Fragment {
     private ArrayList<String> resume;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,
-                             Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         mView = inflater.inflate(R.layout.fragment_statistiques, container, false);
         myList = (ListView) mView.findViewById(R.id.liste_depenses_par_categorie);
@@ -43,7 +41,6 @@ public class FragmentStatistiques extends Fragment {
         super.onStart();
 
         resume = new ArrayList<>();
-
         populateListView();
 
         myList.setAdapter(new Adapter_Statistiques(getActivity(), resume));
@@ -51,5 +48,4 @@ public class FragmentStatistiques extends Fragment {
         TextView textView_statistiques_montant_total = (TextView)getView().findViewById(R.id.textView_statistiques_montant_total);
         textView_statistiques_montant_total.setText(montantTotal + " $");
     }
-
 }
