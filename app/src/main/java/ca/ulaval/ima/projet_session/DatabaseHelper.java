@@ -7,14 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -110,12 +107,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + TABLE_NAME;
         return db.rawQuery(query, null);
     }
-
-/*    public Cursor getStatisticsByCategory()
-    {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME;
-    }*/
 
     public void updateDepense(String date, String prix, String description, String categorie, byte[] image) {
         SQLiteDatabase db = this.getWritableDatabase();

@@ -12,7 +12,6 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat.Builder;
-import android.util.Log;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;

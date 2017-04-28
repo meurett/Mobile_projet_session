@@ -1,28 +1,20 @@
 package ca.ulaval.ima.projet_session;
 
-import android.support.design.widget.FloatingActionButton;
-
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
-public class MainActivity extends AppCompatActivity implements DepenseListener
-{
+public class MainActivity extends AppCompatActivity{
     DatabaseHelper mDatabaseHelper;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    private ArrayList<Depense> depenses = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,12 +32,6 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-    }
-
-    @Override
-    public void addDepense(Depense depense)
-    {
-        depenses.add(depense);
     }
 
     @Override
