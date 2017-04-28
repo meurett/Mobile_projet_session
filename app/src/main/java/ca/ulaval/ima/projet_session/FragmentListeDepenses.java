@@ -107,7 +107,7 @@ public class FragmentListeDepenses extends Fragment {
             String mMonth = getMonthFromInt(calendar.get(Calendar.MONTH));
             int mDay = calendar.get(Calendar.DAY_OF_MONTH);
             int mYear = calendar.get(Calendar.YEAR);
-            resume.add(mDay + " " + mMonth + " (" + mYear + ") " + " : " + prixString + " $ - ( " + categorieString + " )");
+            resume.add(mDay + " " + mMonth + " (" + mYear + ") " + " : " + prixString + " $ - [ " + categorieString + " ]");
         }
     }
 

@@ -13,7 +13,7 @@
         android:textAllCaps="true"
         android:textStyle="normal|bold"
         tools:text="Catégories"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="35dp"
         android:layout_below="@+id/textView_statistiques_montant_total"
         android:layout_centerHorizontal="true" />
 
@@ -32,52 +32,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/textView_statistiques_montant_total"
         android:layout_below="@+id/textView_statistiques_prefixe_montant_total"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="Essence :"
+    <ListView android:id="@+id/liste_depenses_par_categorie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="66dp"
-        android:id="@+id/textView_statistiques_prefixe_montant_essence"
-        android:layout_below="@+id/textView_statistiques_prefixe_montant_categories"
-        android:layout_toLeftOf="@+id/textView_statistiques_prefixe_montant_total"
-        android:layout_toStartOf="@+id/textView_statistiques_prefixe_montant_total"
-        tools:text="Essence :" />
-
-    <TextView
-        android:text="Restaurant :"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_statistiques_prefixe_montant_essence"
-        android:layout_alignLeft="@+id/textView_statistiques_prefixe_montant_essence"
-        android:layout_alignStart="@+id/textView_statistiques_prefixe_montant_essence"
-        android:layout_marginTop="83dp"
-        android:id="@+id/textView_statistiques_prefixe_montant_restaurant"
-        tools:text="Restaurant :" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView_statistiques_prefixe_montant_restaurant"
-        android:layout_toRightOf="@+id/textView_statistiques_prefixe_montant_total"
-        android:layout_toEndOf="@+id/textView_statistiques_prefixe_montant_total"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp"
-        android:id="@+id/textView_statistiques_montant_essence" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView_statistiques_prefixe_montant_restaurant"
-        android:layout_alignRight="@+id/textView_statistiques_montant_essence"
-        android:layout_alignEnd="@+id/textView_statistiques_montant_essence"
-        android:id="@+id/textView_statistiques_montant_restaurant" />
+        android:transcriptMode="alwaysScroll"
+        android:layout_marginTop="100dp"
+        android:layout_below="@+id/textView_statistiques_prefixe_montant_total"
+        android:cacheColorHint="#00000000"
+        android:listSelector="@android:color/transparent"/>
 
 
 </RelativeLayout>

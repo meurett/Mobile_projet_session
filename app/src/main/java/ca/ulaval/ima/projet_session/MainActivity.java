@@ -83,14 +83,14 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
                     RootGPS rootGPS = new RootGPS();
                     return rootGPS;
                 case 1:
-                    RootGDrive rootGDrive = new RootGDrive();
-                    return rootGDrive;
-                case 2:
-                    RootStatistiques rootStatistiques = new RootStatistiques();
-                    return rootStatistiques;
-                case 3:
                     RootListeDepenses rootListeDepenses = new RootListeDepenses();
                     return rootListeDepenses;
+                case 2:
+                    RootGDrive rootGDrive = new RootGDrive();
+                    return rootGDrive;
+                case 3:
+                    RootStatistiques rootStatistiques = new RootStatistiques();
+                    return rootStatistiques;
                 default:
                     return null;
             }
@@ -110,11 +110,11 @@ public class MainActivity extends AppCompatActivity implements DepenseListener
                 case 0:
                     return "GPS";
                 case 1:
-                    return "GDrive";
-                case 2:
-                    return "Statistiques";
-                case 3:
                     return "Dépenses";
+                case 2:
+                    return "GDrive";
+                case 3:
+                    return "Statistiques";
             }
             return null;
         }

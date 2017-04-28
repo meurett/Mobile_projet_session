@@ -28,7 +28,6 @@ public class FragmentAjoutDepense extends Fragment {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
     Button buttonAddImage;
     ImageView imageViewImage;
-    // On stock l'image dans une variable globale au fragment :
     Bitmap bitmap;
 
     @Override

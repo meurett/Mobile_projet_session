@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + "(" +
                 COL_0 + " INTEGER PRIMARY KEY, " +
-                COL_1 + " VARCHAR, " +
+                COL_1 + " REAL, " +
                 COL_2 + " VARCHAR, " +
                 COL_3 + " VARCHAR, " +
                 COL_4 + " BLOB);";
@@ -47,6 +47,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP IF TABLE EXISTS " + TABLE_NAME);
         onCreate(db);
+    }
+
+    public void createTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String createTable = "CREATE TABLE " + TABLE_NAME + "(" +
+                COL_0 + " INTEGER PRIMARY KEY, " +
+                COL_1 + " REAL, " +
+                COL_2 + " VARCHAR, " +
+                COL_3 + " VARCHAR, " +
+                COL_4 + " BLOB);";
+        db.execSQL(createTable);
+    }
+
+    public void deleteTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String deleteTable = "DROP TABLE " + TABLE_NAME;
+        db.execSQL(deleteTable);
+    }
+
+    public Cursor getSumsByCategorie(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query =
+                "SELECT " + COL_2 + " , SUM(" + COL_1 + ")" +
+                " FROM " + TABLE_NAME +
+                " GROUP BY " + COL_2 + " ;";
+        return db.rawQuery(query, null);
     }
 
     public boolean addData(String date, String categorie, String prix, String description, byte[] image) {
