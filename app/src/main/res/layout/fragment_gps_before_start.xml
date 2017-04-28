@@ -37,13 +37,13 @@
                 android:gravity="right"
                 android:text="$ / km : "
                 android:textSize="24sp"/>
+
             <EditText
                 android:id="@+id/kilometerCost"
                 android:layout_width="0px"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:focusable="false"
                 android:inputType="numberDecimal"
                 tools:text="0" />
         </LinearLayout>

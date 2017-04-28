@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class FragmentGPS_Before_Start extends Fragment
     private final ServiceConnection serviceConnection = new ServiceConnection();
     private Button buttonToggleTracking, buttonSave, buttonReset;
     private TextView textDistanceValue;
+    private EditText kilometerCost;
     private Messenger toServiceMessenger = null;
     private float distanceTraveled = 0;
 
@@ -43,6 +45,7 @@ public class FragmentGPS_Before_Start extends Fragment
         buttonSave = (Button)view.findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(new onClickButtonSave());
         textDistanceValue = (TextView)view.findViewById(R.id.textViewDistance);
+        kilometerCost = (EditText)view.findViewById(R.id.kilometerCost);
 
         if (ServiceGPS.isRunning()) { bindGPSService(); }
 
