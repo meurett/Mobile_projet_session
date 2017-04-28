@@ -79,5 +79,11 @@
         android:layout_alignEnd="@+id/textView_statistiques_montant_essence"
         android:id="@+id/textView_statistiques_montant_restaurant" />
 
+<!--    <ListView android:id="@+id/listeStatistiquesCategories"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:transcriptMode="alwaysScroll"
+              android:cacheColorHint="#00000000"
+              android:listSelector="@android:color/transparent"/>-->
 
 </RelativeLayout>

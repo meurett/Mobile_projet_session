@@ -6,45 +6,42 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class FragmentStatistiques extends Fragment {
 
-    private ArrayList<String> prix;
-    private ArrayList<String> categorie;
+    private final ArrayList<String> prix = new ArrayList<>();
+    private final ArrayList<String> categories = new ArrayList<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,
-                             Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_statistiques, container, false);
-
-        prix = new ArrayList<>();
-        categorie = new ArrayList<>();
-
         populateListView();
 
         float montantTotalInt = 0;
         float montantEssenceInt = 0;
         float montantRestaurantInt = 0;
 
-        for (int i = 0; i < prix.size(); i++) {
-            String cat = categorie.get(i);
-            if (cat.equals("Restaurant")){
+        for (int i = 0; i < prix.size(); i++)
+        {
+            String cat = categories.get(i);
+            if (cat.equals("Restaurant"))
+            {
                 montantRestaurantInt += Float.parseFloat(prix.get(i));
             }
-            if (cat.equals("Essence")){
+            if (cat.equals("Essence"))
+            {
                 montantEssenceInt += Float.parseFloat(prix.get(i));
             }
             montantTotalInt += Float.parseFloat(prix.get(i));
         }
+
+/*        myList = (ListView) mView.findViewById(R.id.liste_depenses);
+        myList.setAdapter(new Adapter_Fragment_ListeDepense(getActivity(), resume));*/
 
         String montantTotal = Float.toString(montantTotalInt);
         String montantEssence = Float.toString(montantEssenceInt);
@@ -62,16 +59,15 @@ public class FragmentStatistiques extends Fragment {
         return view;
     }
 
-    private void populateListView(){
-        DatabaseHelper db = ((MainActivity)getActivity()).mDatabaseHelper;
-        Cursor data = db.getData();
-        while(data.moveToNext()){
-            String prixString = data.getString(1);
+    private void populateListView()
+    {
+        Cursor cursor = ((MainActivity)getActivity()).mDatabaseHelper.getData();
+        while(cursor.moveToNext())
+        {
+            String prixString = cursor.getString(1);
             prix.add(prixString);
-
-            String categorieString = data.getString(2);
-            categorie.add(categorieString);
+            String categorieString = cursor.getString(2);
+            categories.add(categorieString);
         }
     }
-
 }

@@ -87,11 +87,12 @@ public class FragmentListeDepenses extends Fragment {
         return mView;
     }
 
-    private void populateListView(){
-        DatabaseHelper db = ((MainActivity)getActivity()).mDatabaseHelper;
-        Cursor data = db.getData();
+    private void populateListView()
+    {
+        Cursor data = ((MainActivity)getActivity()).mDatabaseHelper.getData();
         Calendar calendar = Calendar.getInstance();
-        while(data.moveToNext()){
+        while(data.moveToNext())
+        {
             String dateString = data.getString(0);
             date.add(dateString);
 
