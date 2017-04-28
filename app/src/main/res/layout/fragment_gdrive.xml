@@ -5,16 +5,16 @@
               android:orientation="vertical"
               android:gravity="center">
     <Button
-        android:id="@+id/sauvegarder"
-        android:text="Sauvegarder"
+        android:id="@+id/restore_data_from_api"
+        android:text="Restaurer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:gravity="center"/>
 
     <Button
-        android:id="@+id/restorer"
-        android:text="Restaurer"
+        android:id="@+id/save_data_with_api"
+        android:text="Sauvegarder (non fonctionnel)"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"

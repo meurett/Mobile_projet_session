@@ -15,12 +15,11 @@ public class FragmentGDrive extends Fragment {
                              Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_gdrive, container, false);
-        Button buttonSave = (Button) view.findViewById(R.id.sauvegarder);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
+        Button restore = (Button) view.findViewById(R.id.restore_data_from_api);
+        restore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ActivityGConnect.class);
-                Object test = getActivity();
+                Intent intent = new Intent(getActivity(), ActivityGConnectRestore.class);
                 (getActivity()).startActivity(intent);
             }
         });
